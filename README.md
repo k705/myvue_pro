@@ -66,6 +66,17 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
                 },
             },
             ```
+        - 在jsconfig中额外再配置就会有代码书写时的提示
+            ```js
+            "paths": {
+            "@/*": [
+                "src/*"
+            ],
+            "@/comp/*": [
+                "src/components/*"
+            ],
+            },
+            ```
 
 2. less的配置
     - vue脚手架内置了less的配置
