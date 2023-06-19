@@ -77,3 +77,43 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     - 在静态文件中拆分两个组件的结构和样式
         - 在组件中分别引入所用到的图片文件
         - 引入样式重置文件到public，并在public的index中引入
+    
+
+
+4. 路由的基础搭建
+    - 新建路由文件夹pages
+        - 新建Home、Login、Register、Search、404五个路由组件
+            - 404
+                - 点击跳转回首页用`<router-link to="/home">`
+            - Home
+            - Login
+            - Register
+            - Search
+        - 设置样式`<style lang="less" scoped></style>`
+    - 新建router文件夹
+        - index
+            - 引入`vue vue-router routes`
+            - 配置`router = new VueRouter`
+            - 在main中引入router
+            - 重写push解决编程式重复导航bug
+
+        - routes路由表
+            - 引入路由组件
+            - 配置路由表
+
+        - 在对应的点击跳转的位置将a标签改写为`<router-link to="/xxx">`(声明式导航)
+        - 在对应的点击跳转的位置将button标签改写为`@click =$route.push("xx")`(编程式导航)
+
+    - 在App中通过`<router-view>`占位
+
+5. App组件
+    - Footer组件
+        - Footer组件的条件渲染-路由元信息方式
+            - 在路由表中配置meta元信息(路由固有的属性)
+        - Footer组件的条件渲染-计算属性白名单写法
+            - 白名单，数据多的时候用数组或对象
+        - Footer组件的条件渲染-计算属性写法
+            - 当插值语法中处理数据的逻辑复杂时，写到计算属性中，用v-if控制是否渲染
+        - Footer组件的条件渲染-插值写法
+            - 差值表达式，用v-if控制是否渲染`<Footer v-if="$route.name !== 'Login' && $route.name !== 'Register'" /> `
+        - bug:`$route.name`写成了`$router.name`!!!
