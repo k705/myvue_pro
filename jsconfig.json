@@ -5,9 +5,13 @@
     "baseUrl": "./",
     "moduleResolution": "node",
     "paths": {
+      // 额外再配置就会有代码书写时的提示
       "@/*": [
-        "src/*"
-      ]
+        "src/*",
+      ],
+      "@comp/*": [
+        "src/components/*",
+      ],
     },
     "lib": [
       "esnext",
