@@ -92,9 +92,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
         - 设置样式`<style lang="less" scoped></style>`
     - 新建router文件夹
         - index
-            - 引入`vue vue-router routes`
-            - 配置`router = new VueRouter`
-            - 在main中引入router
+            - 引入`vue、vue-router、routes`
+            - 把路由作为插件进行使用`Vue.use(VueRouter)`
+            - 实例化一个路由器对象 `const router = new VueRouter({routes,});`
+            - 在vm配置项main中使用router配置项,向所有的组件实例中注入 $router对象和 $route对象router
             - 重写push解决编程式重复导航bug
 
         - routes路由表
@@ -117,3 +118,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
         - Footer组件的条件渲染-插值写法
             - 差值表达式，用v-if控制是否渲染`<Footer v-if="$route.name !== 'Login' && $route.name !== 'Register'" /> `
         - bug:`$route.name`写成了`$router.name`!!!
+
+6. Home组件的静态CV
+    - 在home组件中新建首页的组件index和image文件夹
+    - 在home的index文件夹中引入并注册主页组件，在template模板中渲染

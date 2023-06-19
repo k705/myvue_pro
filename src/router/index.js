@@ -2,12 +2,13 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes"
 
-Vue.use(VueRouter)
+//把路由作为插件进行使用
+Vue.use(VueRouter);
 
+//实例化一个路由器对象
 const router = new VueRouter({
-    mode: 'history',
-    routes
-})
+  routes,
+});
 
 
 // 重写push解决编程式重复导航bug
