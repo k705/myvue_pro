@@ -34,3 +34,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 3. 打包配置configureWebpack
     - 路径别名配置alias`"@": path.resolve(__dirname, "./src")`
     - jsconfig中额外再配置就会有代码书写时的提示
+4. 配置eslint
+    - 关闭项目eslint语法检查
+        `lintOnSave:false`
+    - 关闭某个语法检查
+        在eslintrc.js文件中把某个语法检查设置为"warn"、"off"、0、1
