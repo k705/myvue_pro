@@ -1,8 +1,9 @@
 import axios from "axios"
-
+// 环境变量对象
+  console.log(process.env);
 // 创建一个axios实例
 const request = axios.create({
-  baseURL: "/",
+  baseURL: process.env.VUE_APP_API1,
   timeout: 1000,
   headers:{}
 })

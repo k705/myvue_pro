@@ -201,6 +201,12 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     ```
 
 9. 环境变量env配置
+    - 上线打包后（生产环境）下没有devServer
+    - 配置env环境变量 便于后期修改baseURL
+    - 在根目录创建.env .env.development  env.production
+    - 配置VUE_APP_API1 = /prod-api1、VUE_APP_API1 = /dev-api1
+    - 在axios实例request的baseURL中配置process.env.VUE_APP_API1
+    - 在生产和开发环境下就会根据VUE_APP_API1自动改变前缀
 
 10. 项目响应拦截器的完整配置
 
