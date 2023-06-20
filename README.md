@@ -137,11 +137,71 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 7. axios拦截器配置
     - 新建request文件夹
     - index
-        引入创建的axios实例(request)
+        引入创建的axios实例(request)并暴露
     - request(创建的axios实例的名字)
-        - 
-8. 环境变量env配置
+        - 引入axios
+        - 创建axios实例
+        ```js
+            const request = axios.create({
+            baseURL: "/",
+            timeout: 1000,
+            headers:{}
+            })
+        ```
+        - 配置请求和响应拦截器
+        ```js
+            //配置请求拦截器1
+            request.interceptors.request.use(
+            (config) => {
+                console.log("请求拦截器1");
+                // throw new Error("我错了1");
+                return config;
+            },
+            (error) => {
+                console.log("请求拦截器报错了1");
+                return Promise.reject(error);
+            },
+            {
+                //请求拦截器接受第三个参数是一个配置项,配置项中有一个synchronous属性,代表同步捕获错误(当前请求拦截器的成功处理函数中如果抛出错误,则被当前请求拦截器失败函数处理)
+                // synchronous: true,
+            }
+            );
 
-8. 项目响应拦截器的完整配置
 
-9. 路由切换时进度条的配置
+            //配置响应拦截器
+            request.interceptors.response.use(
+            (response) => {
+                // return Promise.resolve(response.data);
+                // return response.data;
+
+                //响应拦截器中的完整配置
+                //如果响应成功也要判断 是不是我们需要的内容,如果是则返回数据,如果不是则返回一个失败的promise
+                if (response.data.code === 200) {
+                return response.data.data;
+                } else {
+                return Promise.reject(response.data);
+                }
+            },
+            (error) => {
+                console.log("响应拦截器捕获错误了");
+                return Promise.reject(error);
+            }
+            );
+        ```
+
+8. 在devServer中配置proxy跨域正向(客户端)代理配置
+    ```js
+        proxy: {
+        "/dev-api1": {
+            target: "http://gmall-h5-api.atguigu.cn/",
+            changeOrigin: true,
+            pathRewrite: {
+            "^/dev-api1": "",
+            },
+    ```
+
+9. 环境变量env配置
+
+10. 项目响应拦截器的完整配置
+
+11. 路由切换时进度条的配置

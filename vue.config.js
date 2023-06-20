@@ -13,6 +13,15 @@ module.exports = defineConfig({
     
     //端口号(0----65535,1-1023系统端口号,1024-5000属于应用端口)
     port: 8888,
+    proxy: {
+      "/dev-api1": {
+        target: "http://gmall-h5-api.atguigu.cn/",
+        changeOrigin: true,
+        rewrite: {
+          "^/dev-api1":""
+        }
+      }
+    }
 },
  //关闭项目的eslint检查
   // lintOnSave: false,
