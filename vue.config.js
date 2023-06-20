@@ -10,7 +10,7 @@ module.exports = defineConfig({
     // 是否自动打开浏览器
     open: true,
     // 主机地址(1.localhost  2.127.0.0.1 3.本地ip：cmd中查找ipconfig)
-    host: '192.168.16.71',
+    host: '127.0.0.1',
     // 端口号 (0----65535,1-1023系统端口号,1024-5000属于应用端口)
     port:8080
   },
