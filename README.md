@@ -133,3 +133,15 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 6. Home组件的静态CV
     - 在home组件中新建首页的组件index和image文件夹
     - 在home的index文件夹中引入并注册主页组件，在template模板中渲染
+
+7. axios拦截器配置
+    - 新建request文件夹
+    - index
+        引入创建的axios实例(request)
+    - request(创建的axios实例的名字)
+        - 
+8. 环境变量env配置
+
+8. 项目响应拦截器的完整配置
+
+9. 路由切换时进度条的配置
