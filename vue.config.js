@@ -1,11 +1,12 @@
 const { defineConfig } = require('@vue/cli-service')
+const path = require("path")
 module.exports = defineConfig({
   transpileDependencies: false,
   // 服务器配置
   devServer: {
     open: true,
-    host: "172.20.10.4",
-    port:8080
+    host: "127.0.0.1",
+    port:8888
   },
   configureWebpack: {
     resolve: {
