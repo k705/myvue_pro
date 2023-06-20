@@ -208,6 +208,18 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     - 在axios实例request的baseURL中配置process.env.VUE_APP_API1
     - 在生产和开发环境下就会根据VUE_APP_API1自动改变前缀
 
-10. 项目响应拦截器的完整配置
-
-11. 路由切换时进度条的配置
+10. 路由切换时进度条的配置
+    - 下载并引入NProgress
+    `import NProgress from "nprogress";import "nprogress/nprogress.css";`
+    - 路由切换时改变，所以在路由守卫中配置
+    - 在router中配置全局前置守卫和全局后置钩子
+    ```js
+    // 路由切换时进度条的配置
+    // 全局前置守卫beforeEach
+    router.beforeEach((to, from, next) => {
+    NProgress.start();
+    next();
+    })
+    // 全局前置守卫afterEach
+    router.afterEach((to, from, next) => { NProgress.done() })
+    ```
