@@ -53,3 +53,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 2. 元信息 （某个组件特定的信息路由表中配meta）
 
 ## axios配置
+## 进度条配置
