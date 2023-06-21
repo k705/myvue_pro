@@ -6,7 +6,17 @@ module.exports = defineConfig({
   devServer: {
     open: true,
     host: "127.0.0.1",
-    port:8888
+    port: 8888,
+    //代理
+    proxy: {
+      "/dev-api1": {
+        target: "http://gmall-h5-api.atguigu.cn/",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/dev-api1": "",
+        },
+      },
+    },
   },
   configureWebpack: {
     resolve: {
