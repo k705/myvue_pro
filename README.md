@@ -43,3 +43,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Header、Footer公共组件
 1. 注意引入样式重置文件
+
+## 路由基础搭建
+1. pages文件夹：路由组件
+2. router文件夹：配置路由
