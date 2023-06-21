@@ -12,7 +12,18 @@ module.exports = defineConfig({
     // 主机地址(1.localhost  2.127.0.0.1 3.本地ip：cmd中查找ipconfig)
     host: '127.0.0.1',
     // 端口号 (0----65535,1-1023系统端口号,1024-5000属于应用端口)
-    port:8080
+    port: 8080,
+    
+    // 配置跨域正向(客户端)代理
+    proxy: {
+      "/dev-api1": {
+        target:"http://gmall-h5-api.atguigu.cn/",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/dev-api1": "",
+        }
+      }
+    }
   },
 
   // 配置eslint检查是否打开
