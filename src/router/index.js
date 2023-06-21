@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router"
 import routes from '@/router/routes'
+import NProgress from "nprogress"
+import "nprogress/nprogress.css";
 
 Vue.use(VueRouter)
 
@@ -17,4 +19,13 @@ VueRouter.prototype.replace = function (
 ) {
   oldReplace.call(this, loaction, onComplate, onAbort);
 };
+
+// 进度条
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+  next()
+})
+router.afterEach(() => {
+  NProgress.done()
+})
 export default router

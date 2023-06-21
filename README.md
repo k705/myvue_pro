@@ -51,3 +51,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## Footer组件控制显示
 1. 白名单 （多个数据用数组或对象）
 2. 元信息 （某个组件特定的信息路由表中配meta）
+
+## axios配置
