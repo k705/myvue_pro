@@ -47,3 +47,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## 路由基础搭建
 1. pages文件夹：路由组件
 2. router文件夹：配置路由
+
+## Footer组件控制显示
+1. 白名单 （多个数据用数组或对象）
+2. 元信息 （某个组件特定的信息路由表中配meta）
