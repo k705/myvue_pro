@@ -18,12 +18,18 @@ export default {
   },
   data() {
     return {
-      FooterShowList: ["Register", "Login"],
+      // 白名单方法
+      // FooterShowList: ["Register", "Login"],
     };
   },
   computed: {
+    
     FooterIsShow() {
-      return !this.FooterShowList.includes(this.$route.name);
+      // 白名单方法
+      // return !this.FooterShowList.includes(this.$route.name);
+
+      // 元信息方法
+      return !this.$route.meta.FooterHidden
     },
   },
 };

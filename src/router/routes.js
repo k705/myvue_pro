@@ -17,11 +17,18 @@ export default [
     {
         path: "/login",
         name: "Login",
-        component:Login
+        component: Login,
+        meta: {
+            FooterHidden:true
+        }
     },{
         path: "/register",
         name: "Register",
-        component:Register
+        component: Register,
+        meta: {
+            FooterHidden:true
+        }
+        
     },{
         path: "/search",
         name: "Search",
