@@ -5,6 +5,7 @@ import routes from '@/router/routes'
 Vue.use(VueRouter)
 // 实例化路由器对象
 const router = new VueRouter({
+    mode:"history",
     routes,
 })
 // 重写push解决编程式路由重复导航bug

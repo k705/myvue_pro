@@ -2,7 +2,7 @@
   <div >
     <Header/>
     <router-view></router-view>
-    <Footer/>
+    <Footer v-if="FooterIsShow"/>
   </div>
 </template>
 
@@ -15,6 +15,11 @@ export default {
   components: {
     Header,
     Footer
+  },
+  computed:{
+    FooterIsShow(){
+      return this.$route.name !== 'Login'&&this.$route.name!=='Register'
+    }
   }
 }
 </script>
