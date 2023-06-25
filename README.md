@@ -54,3 +54,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## axios配置
 ## 进度条配置
+
+## 一级分类列表请求及渲染

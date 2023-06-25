@@ -13,7 +13,7 @@ request.interceptors.request.use((config) => {
 
 // 响应拦截器
 request.interceptors.response.use((response) => {
-    if (response.data.data === 200) {
+    if (response.data.code === 200) {
         return response.data.data
     }
     else {
