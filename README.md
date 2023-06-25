@@ -246,3 +246,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
             - axios实例文件夹request中拦截器配置中，if (response.data.code === 200)没加code
     - 一级分类列表渲染
         - 在一级列表对应的div中，v-for遍历请求到的数据
+
+2. 首页一级分类列表的动态样式

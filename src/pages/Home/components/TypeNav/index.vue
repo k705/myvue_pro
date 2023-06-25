@@ -15,9 +15,16 @@
       </nav>
       <div class="sort">
         <div class="all-sort-list2">
-          <div class="item" v-for="category1 in category1List" :key="category1.id">
-            <h3><a >{{category1.name}}</a>
-              
+          <div
+            class="item"
+            v-for="(category1, index) in category1List"
+            :key="category1.id"
+            :class="{ active: mouseEnterIndex === index }"
+            @mouseenter="mouseEnterIndex = index"
+            @mouseleave="mouseEnterIndex = -1"
+          >
+            <h3>
+              <a>{{ category1.name }}</a>
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
@@ -42,11 +49,8 @@
                 </dl>
               </div>
             </div>
-        
-          
-            <h3>
-              <a href="">箱包</a>
-            </h3>
+
+           
           </div>
         </div>
       </div>
@@ -55,23 +59,26 @@
 </template>
 
 <script>
-import {reqCategory1List} from "@/api/home"
+import { reqCategory1List } from "@/api/home";
 export default {
   name: "TypeNav",
-   data() {
+  data() {
     return {
       //1级分类列表
       category1List: [],
-  }},
- mounted() {
+      // 鼠标移入列表下标
+      mouseEnterIndex: -1,
+    };
+  },
+  mounted() {
     //1. 初始化1级分类列表
     this.getCategory1List();
   },
   methods: {
-    async getCategory1List(){
+    async getCategory1List() {
       const result = await reqCategory1List();
       this.category1List = result;
-    }
+    },
   },
 };
 </script>
@@ -119,6 +126,11 @@ export default {
 
       .all-sort-list2 {
         .item {
+          &.active {
+            h3 {
+              background: yellowgreen;
+            }
+          }
           h3 {
             line-height: 30px;
             font-size: 14px;
