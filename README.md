@@ -240,4 +240,8 @@ router.afterEach((to, from, next) => { NProgress.done() })
 
     - 一级分类列表渲染
 
+2. 首页一级分类列表的动态样式
+    - 动态类绑定 对象写法`:class="{active:mouseEnterIndex===index}"`
+    - 响应式数据 `data(){return{mouseEnterIndex:-1}`
+    - 绑定事件，改变数据
 

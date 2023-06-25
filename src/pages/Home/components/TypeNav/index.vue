@@ -15,7 +15,10 @@
       </nav>
       <div class="sort">
         <div class="all-sort-list2">
-          <div class="item " v-for="category1 in category1List" :key="category1.id">
+          <div class="item " v-for="category1,index in category1List" :key="category1.id"
+        :class="{active:mouseEnterIndex===index}"
+          @mouseenter="mouseEnterIndex=index"
+          @mouseleave="mouseEnterIndex=-1">
             <h3>
               <a >{{category1.name}}</a>
             </h3>
@@ -56,7 +59,10 @@ export default {
   name: "TypeNav",
   data(){
     return{
-      category1List:[]
+      // 1.一级列表请求数据
+      category1List:[],
+      // 2.保存鼠标移入的列表下标
+      mouseEnterIndex:-1
     }
   },
   mounted(){
@@ -114,6 +120,11 @@ this.getCategory1List()
 
       .all-sort-list2 {
         .item {
+          &.active{
+            h3{
+              background: yellowgreen;
+            }
+          }
           h3 {
             line-height: 30px;
             font-size: 14px;
@@ -187,6 +198,7 @@ this.getCategory1List()
             }
           }
         }
+
       }
     }
   }
