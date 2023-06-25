@@ -14,11 +14,11 @@ request.interceptors.request.use((config) => { return config })
 // 响应拦截器配置
 request.interceptors.response.use((response) => {
   if (response.data.code === 200) {
-    return response.data
+    return response.data.data
   } else {
     return Promise.reject(response.data)
   }
-}, (err) => {
+}, (error) => {
   return Promise.reject(error)
 })
 
