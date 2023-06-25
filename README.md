@@ -245,3 +245,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 响应式数据 `data(){return{mouseEnterIndex:-1}`
     - 绑定事件，改变数据
 
+3. 首页-鼠标移入一级请求二级
+

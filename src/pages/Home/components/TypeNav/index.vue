@@ -17,7 +17,7 @@
         <div class="all-sort-list2">
           <div class="item " v-for="category1,index in category1List" :key="category1.id"
         :class="{active:mouseEnterIndex===index}"
-          @mouseenter="mouseEnterIndex=index"
+          @mouseenter="category1MouseEnter(index,id)"
           @mouseleave="mouseEnterIndex=-1">
             <h3>
               <a >{{category1.name}}</a>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import {reqCategory1List} from "@/api/home"
+import {reqCategory1List,reqCategory2List} from "@/api/home"
 export default {
   name: "TypeNav",
   data(){
@@ -72,7 +72,14 @@ this.getCategory1List()
     async getCategory1List (){
       const result  = await reqCategory1List();
       this.category1List = result;
-    }
+    },
+    async category1MouseEnter(index,id){
+        // 保存鼠标移入的下标
+        mouseEnterIndex = index
+        // 发送请求数据
+        const result = await reqCategory2List(id);
+      // this.category2List = result;
+      }
   }
 };
 </script>
