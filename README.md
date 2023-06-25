@@ -232,3 +232,17 @@ next();
 // 全局前置守卫afterEach
 router.afterEach((to, from, next) => { NProgress.done() })
 ```
+
+## 首页分类列表
+1. 首页-一级分类列表请求及渲染
+    - 每个组件都有自己的请求，写在api文件夹中
+    - 一级分类列表请求
+        - 在api-home.js文件中通过axios.get获取一级列表数据并暴露
+        - 在TypeNav组件中拿到响应式数据
+        - bug1
+            - home.js中reqCategory1List使用的是分别暴露的方式，但是TypeNav组件中引入的时候却使用了默认暴露引入接口，才出现带有api的错误。
+            - 改正：引入的方式加一个{}`import {reqCategory1List} from "@/api/home"`
+        - bug2
+            - axios实例文件夹request中拦截器配置中，if (response.data.code === 200)没加code
+    - 一级分类列表渲染
+        - 在一级列表对应的div中，v-for遍历请求到的数据
