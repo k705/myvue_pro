@@ -56,3 +56,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## 进度条配置
 
 ## 一级分类列表请求及渲染
+
+## 首页一级分类列表的动态样式

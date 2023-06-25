@@ -15,7 +15,10 @@
       </nav>
       <div class="sort">
         <div class="all-sort-list2">
-          <div class="item" v-for="category1 in category1List" :key="category1.id">
+          <div class="item" v-for="category1,index in category1List" :key="category1.id"
+          :class="{active:mouseEnterIndex===index}"
+          @mouseenter="mouseEnterIndex=index"
+          @mouseleave="mouseEnterIndex=-1">
             <h3>
               <a >{{category1.name}}</a>
             </h3>
@@ -55,7 +58,8 @@ import {reqCategory1List} from "@/api/home"
 export default {
   name: "TypeNav",
   data(){
-    return{ category1List:[]}
+    return{ category1List:[],
+    mouseEnterIndex:-1}
    
   },
   mounted(){
@@ -113,6 +117,9 @@ export default {
 
       .all-sort-list2 {
         .item {
+          &.active{
+            h3{background: yellowgreen;}
+          }
           h3 {
             line-height: 30px;
             font-size: 14px;
