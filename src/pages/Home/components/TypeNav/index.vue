@@ -14,7 +14,9 @@
         <a href="###">秒杀</a>
       </nav>
       <div class="sort">
-        <div class="all-sort-list2">
+        <div class="all-sort-list2"
+        @mouseenter="mouseIsInCategory=true"
+        @mouseleave="mouseIsInCategory=false">
           <div
             class="item"
             v-for="(category1, index) in category1List"
@@ -68,6 +70,8 @@ export default {
       category1List: [],
       // 鼠标移入列表下标
       mouseEnterIndex: -1,
+      // 保存鼠标是否在三级分类区域
+      mouseIsInCategory:false
     };
   },
   mounted() {
