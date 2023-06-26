@@ -256,3 +256,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
         - this.$set(对象，"属性名",属性值)
 
 4. 首页-三级分类的响应式添加和渲染
+
+5. 首页-三级分类节流处理
