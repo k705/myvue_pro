@@ -257,3 +257,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
 
 5. 首页-三级分类节流处理
     - 安装lodash
+    - 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数  多少秒后执行
+    - 解决bug：节流之后 鼠标移出整个区域 还会再执行一次函数的问题
