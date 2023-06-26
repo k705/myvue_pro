@@ -18,6 +18,7 @@
           class="all-sort-list2"
           @mouseenter="mouseIsInCategory = true"
           @mouseleave="mouseIsInCategory = false"
+          @click="toSearch"
         >
           <div
             class="item"
@@ -28,7 +29,11 @@
             @mouseleave="mouseEnterIndex = -1"
           >
             <h3>
-              <a>{{ category1.name }}</a>
+              <a
+                :data-category1Id="category1.id"
+                :data-categoryName="category1.name"
+                >{{ category1.name }}</a
+              >
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
@@ -38,14 +43,22 @@
                   :key="category2.id"
                 >
                   <dt>
-                    <a>{{ category2.name }}</a>
+                    <a
+                      :data-category2Id="category2.id"
+                      :data-categoryName="category2.name"
+                      >{{ category2.name }}</a
+                    >
                   </dt>
                   <dd>
                     <em
                       v-for="category3 in category2.children"
                       :key="category3.id"
                     >
-                      <a>{{ category3.name }}</a>
+                      <a
+                        :data-category3Id="category3.id"
+                        :data-categoryName="category3.name"
+                        >{{ category3.name }}</a
+                      >
                     </em>
                   </dd>
                 </dl>
@@ -126,6 +139,29 @@ export default {
     },
     //3.定义一个函数占位,将来赋值为 处理过的节流函数(一级分类鼠标移入的节流函数)
     category1MouseEnterThrottle() {},
+
+    // 4.编程式路由导航三级列表到搜索页
+    toSearch(e) {
+      // 如果当前点击的target元素上没有categoryname，则不跳转
+      if (!e.target.dataset.categoryname) return;
+
+      // 获取当前点击元素上的categoryid和categoryname
+      let { category1id, category2id, category3id, categoryname } =
+        e.target.dataset;
+      // 获取当前可能存在的params参数
+      const params = this.$route.params;
+      // 编程式路由导航
+      this.$router.push({
+        path: "Search",
+        query: {
+          category1id: category1id,
+          category2Id: category2id,
+          category3Id: category3id,
+          categoryName: categoryname,
+        },
+        params,
+      });
+    },
   },
 };
 </script>

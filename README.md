@@ -259,3 +259,21 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 安装lodash
     - 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数  多少秒后执行
     - 解决bug：节流之后 鼠标移出整个区域 还会再执行一次函数的问题
+
+6. 首页-三级分类的声明式路由导航
+    - `<router-link></router-link>`会导致三级列表加载慢，且使用事件委托后不方便
+7. 首页-编程式路由导航跳转search页
+    - 事件委托，子元素有很多相同操作的时候，把事件绑定在父元素上，通过冒泡使得点击子元素也能触发事件
+    - 要获取category1Id、category2Id、category3Id、categoryName，添加自定义属性保存`:data-category3Id="category3.id"`
+    - 编程式路由导航
+        ```js
+        this.$router.push({ path: "Search",query: {
+          category1id: category1id,
+          category2Id: category2id,
+          category3Id: category3id,
+          categoryName: categoryname,
+        },
+        params,
+      });
+      ```
+      - bug:`this.$router.push`写成了`this.$route.push`！！
