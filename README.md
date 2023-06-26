@@ -254,3 +254,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
         - methods中用到的数据要加this！！！
     - 响应式添加对象属性
         - this.$set(对象，"属性名",属性值)
+
+4. 首页-三级分类的响应式添加和渲染

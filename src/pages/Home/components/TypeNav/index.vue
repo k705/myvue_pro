@@ -20,7 +20,7 @@
             v-for="(category1, index) in category1List"
             :key="category1.id"
             :class="{ active: mouseEnterIndex === index }"
-            @mouseenter="category1MouseEnter(index,category1.id)"
+            @mouseenter="category1MouseEnter(index, category1)"
             @mouseleave="mouseEnterIndex = -1"
           >
             <h3>
@@ -28,29 +28,23 @@
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
-                <dl class="fore" v-for="category2 in category1.children" :key="category2.id">
+                <dl
+                  class="fore"
+                  v-for="category2 in category1.children"
+                  :key="category2.id"
+                >
                   <dt>
-                    <a >{{category2.name}}</a>
+                    <a>{{ category2.name }}</a>
                   </dt>
                   <dd>
-                    <em>
-                      <a href="">婚恋/两性</a>
+                    <em v-for="category3 in category2.children" :key="category3.id">
+                      <a >{{category3.name}}</a>
                     </em>
-                    <em>
-                      <a href="">文学</a>
-                    </em>
-                    <em>
-                      <a href="">经管</a>
-                    </em>
-                    <em>
-                      <a href="">畅读VIP</a>
-                    </em>
+                    
                   </dd>
                 </dl>
               </div>
             </div>
-
-           
           </div>
         </div>
       </div>
@@ -59,7 +53,11 @@
 </template>
 
 <script>
-import { reqCategory1List, reqCategory2List } from "@/api/home";
+import {
+  reqCategory1List,
+  reqCategory2List,
+  reqCategory3List,
+} from "@/api/home";
 export default {
   name: "TypeNav",
   data() {
@@ -79,15 +77,21 @@ export default {
       const result = await reqCategory1List();
       this.category1List = result;
     },
-   async  category1MouseEnter(index,id){
-    //  保存鼠标移入下标
-    this.mouseEnterIndex = index
-    // 获取二级列表数据
-     const result = await reqCategory2List(id)
-    //  设置响应式数据
-    this.$set(this.category1List[index],'children',result)
-  
-   }
+    async category1MouseEnter(index, category1) {
+      //  保存鼠标移入下标
+      this.mouseEnterIndex = index;
+      // 判断：如果已经存在children属性就不再发送二级列表请求
+      if(category1.children) return;
+      // 获取二级列表数据
+      const result = await reqCategory2List(category1.id);
+      // 获取三级列表数据
+      result.forEach(async (item) => {
+        const result = await reqCategory3List(item.id);
+        this.$set(item,'children',result)
+      });
+      //  设置响应式数据
+      this.$set(this.category1List[index], "children", result);
+    },
   },
 };
 </script>
