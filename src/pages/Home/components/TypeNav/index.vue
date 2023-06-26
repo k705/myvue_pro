@@ -14,9 +14,12 @@
         <a href="###">秒杀</a>
       </nav>
       <div class="sort">
-        <div class="all-sort-list2"
-        @mouseenter="mouseIsInCategory=true"
-        @mouseleave="mouseIsInCategory=false">
+        <div
+          class="all-sort-list2"
+          @mouseenter="mouseIsInCategory = true"
+          @mouseleave="mouseIsInCategory = false"
+          @click="toSearch"
+        >
           <div
             class="item"
             v-for="(category1, index) in category1List"
@@ -26,7 +29,11 @@
             @mouseleave="mouseEnterIndex = -1"
           >
             <h3>
-              <a>{{ category1.name }}</a>
+              <a
+                :data-category1Id="category1.id"
+                :data-categoryName="category1.name"
+                >{{ category1.name }}</a
+              >
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
@@ -36,13 +43,23 @@
                   :key="category2.id"
                 >
                   <dt>
-                    <a>{{ category2.name }}</a>
+                    <a
+                      :data-category2Id="category2.id"
+                      :data-categoryName="category2.name"
+                      >{{ category2.name }}</a
+                    >
                   </dt>
                   <dd>
-                    <em v-for="category3 in category2.children" :key="category3.id">
-                      <a >{{category3.name}}</a>
+                    <em
+                      v-for="category3 in category2.children"
+                      :key="category3.id"
+                    >
+                      <a
+                        :data-category3Id="category3.id"
+                        :data-categoryName="category3.name"
+                        >{{ category3.name }}</a
+                      >
                     </em>
-                    
                   </dd>
                 </dl>
               </div>
@@ -71,13 +88,13 @@ export default {
       // 鼠标移入列表下标
       mouseEnterIndex: -1,
       // 保存鼠标是否在三级分类区域
-      mouseIsInCategory:false
+      mouseIsInCategory: false,
     };
   },
   mounted() {
     //1. 初始化1级分类列表
     this.getCategory1List();
-     //2. 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数
+    //2. 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数
     this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
       //leading:让事件函数在节流开始前执行
       leading: true,
@@ -90,26 +107,49 @@ export default {
       const result = await reqCategory1List();
       this.category1List = result;
     },
-       async category1MouseEnter(index, category1) {
+    async category1MouseEnter(index, category1) {
       //看门狗??解决节流之后 鼠标移出整个区域 还会再执行一次函数的问题
       if (!this.mouseIsInCategory) return;
 
       //  保存鼠标移入下标
       this.mouseEnterIndex = index;
       // 判断：如果已经存在children属性就不再发送二级列表请求
-      if(category1.children) return;
+      if (category1.children) return;
       // 获取二级列表数据
       const result = await reqCategory2List(category1.id);
       // 获取三级列表数据
       result.forEach(async (item) => {
         const result = await reqCategory3List(item.id);
-        this.$set(item,'children',result)
+        this.$set(item, "children", result);
       });
       //  设置响应式数据
       this.$set(this.category1List[index], "children", result);
     },
-      //3.定义一个函数占位,将来赋值为 处理过的节流函数(一级分类鼠标移入的节流函数)
+    //3.定义一个函数占位,将来赋值为 处理过的节流函数(一级分类鼠标移入的节流函数)
     category1MouseEnterThrottle() {},
+    // 4.编程式路由导航三级分类列表到search
+    toSearch(e) {
+      
+      // 如果点击的元素上没有categoryname属性则不跳转
+      if (!e.target.dataset.categoryname) return;
+// console.log('11111');
+      // 获取当前元素上的自定义属性
+      let { category1id, category2id, category3id, categoryname } =
+        e.target.dataset;
+      // 获取当前可能存在的params参数
+      const params = this.$route.params;
+      // 编程式路由导航
+      this.$router.push({
+        name: "Search",
+        query: {
+          category1Id: category1id,
+          category2Id: category2id,
+          category3Id: category3id,
+          categoryName: categoryname,
+        },
+        params
+      });
+    },
   },
 };
 </script>
