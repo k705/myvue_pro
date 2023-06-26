@@ -85,6 +85,9 @@ export default {
       this.category1List = result;
     },
     async category1MouseEnter(index, category1) {
+      //看门狗??解决节流之后 鼠标移出整个区域 还会再执行一次函数的问题
+      if (!this.mouseIsInCategory) return;
+
       // 1.保存鼠标移入的下标
       this.mouseEnterIndex = index;
       // 如果children属性存在则不再发送对应的二级请求
