@@ -17,16 +17,16 @@
         <div class="all-sort-list2">
           <div class="item " v-for="category1,index in category1List" :key="category1.id"
         :class="{active:mouseEnterIndex===index}"
-          @mouseenter="category1MouseEnter(index,id)"
+          @mouseenter="category1MouseEnter(index,category1.id)"
           @mouseleave="mouseEnterIndex=-1">
             <h3>
               <a >{{category1.name}}</a>
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
-                <dl class="fore">
+                <dl class="fore" v-for="category2 in category1.children" :key="category2.id">
                   <dt>
-                    <a href="">电子书</a>
+                    <a >{{category2.name}}</a>
                   </dt>
                   <dd>
                     <em>
@@ -71,14 +71,23 @@ this.getCategory1List()
   methods:{
     async getCategory1List (){
       const result  = await reqCategory1List();
+      // 响应式数据方式2：添加一个children属性
+     /*  result.forEach(item => {
+        item.children = []
+      }); */
       this.category1List = result;
     },
     async category1MouseEnter(index,id){
-        // 保存鼠标移入的下标
-        mouseEnterIndex = index
-        // 发送请求数据
+        // 1.保存鼠标移入的下标
+        this.mouseEnterIndex = index
+        // 2.根据一级分类的id发送二级分类请求数据
         const result = await reqCategory2List(id);
-      // this.category2List = result;
+        // 3.把一级分类请求到的二级分类数据，响应式地添加到一级分类对象的children属性上 
+      // this.category1List[index].children = result;
+      //  响应式添加方式1：this.$set添加对象的属性
+      this.$set(this.category1List[index],'children',result)
+      // 响应式添加方式2：this.$set添加对象的属性
+      // this.category1List[index].children = result
       }
   }
 };

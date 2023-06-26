@@ -246,4 +246,7 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 绑定事件，改变数据
 
 3. 首页-鼠标移入一级请求二级
-
+    - home.js中根据一级分类列表id请求二级列表数据
+    - 在TypeNav组件中引入请求的数据
+    - 响应式添加方式1：this.$set添加对象的属性
+    

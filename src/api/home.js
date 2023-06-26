@@ -5,7 +5,7 @@ export const reqCategory1List = () => {
     return request.get(`/admin/product/getCategory1`)
 }
 
-// 2. 请求二级列表数据
+// 2. 根据一级分类列表id请求二级列表数据
 export const reqCategory2List = (category1Id) => {
     return  request.get(`/admin/product/getCategory2/${category1Id}`)
 }
