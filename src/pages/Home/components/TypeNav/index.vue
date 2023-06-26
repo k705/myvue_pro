@@ -18,19 +18,19 @@
           class="all-sort-list2"
           @mouseenter="mouseIsInCategory = true"
           @mouseleave="mouseIsInCategory = false"
+          @click="toSearch"
         >
           <div
             class="item"
             v-for="(category1, index) in category1List"
             :key="category1.id"
             :class="{ active: mouseEnterIndex === index }"
-            @mouseenter="
-               category1MouseEnterThrottle(index, category1)
-            "
+            @mouseenter="category1MouseEnterThrottle(index, category1)"
             @mouseleave="mouseEnterIndex = -1"
           >
             <h3>
-              <a>{{ category1.name }}</a>
+              <a :data-category1Id="category1.id"
+              :data-categoryName = category1.name>{{ category1.name }}</a>
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
@@ -40,14 +40,16 @@
                   :key="category2.id"
                 >
                   <dt>
-                    <a>{{ category2.name }}</a>
+                    <a :data-category2Id="category2.id"
+              :data-categoryName = category2.name>{{ category2.name }}</a>
                   </dt>
                   <dd>
                     <em
                       v-for="category3 in category2.children"
                       :key="category3.id"
                     >
-                      <a>{{ category3.name }}</a>
+                      <a :data-category3Id="category3.id"
+              :data-categoryName = category3.name>{{ category3.name }}</a>
                     </em>
                   </dd>
                 </dl>
@@ -76,12 +78,16 @@ export default {
   mounted() {
     this.getCategory1List(),
       //2. 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数
-     this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
-      //leading:让事件函数在节流开始前执行
-      leading: true,
-      //trailing配置项让函数在节流结束后执行最后一次
-      trailing: true,
-    });
+      (this.category1MouseEnterThrottle = throttle(
+        this.category1MouseEnter,
+        0,
+        {
+          //leading:让事件函数在节流开始前执行
+          leading: true,
+          //trailing配置项让函数在节流结束后执行最后一次
+          trailing: true,
+        }
+      ));
   },
   methods: {
     async getCategory1List() {
@@ -111,6 +117,21 @@ export default {
     },
     //3.定义一个函数占位,将来赋值为 处理过的节流函数(一级分类鼠标移入的节流函数)
     category1MouseEnterThrottle() {},
+    toSearch(e){
+      if(!e.target.dataset.categoryname) return;
+      let {category1id,category2id,category3id,categoryname} = e.target.dataset
+      const params = this.$route.params
+      this.$router.push({
+        name:"Search",
+        query:{
+          category1Id:category1id,
+          category2Id:category2id,
+          category3Id:category3id,
+          categoryName:categoryname
+        },
+        params
+      })
+    }
   },
 };
 </script>
