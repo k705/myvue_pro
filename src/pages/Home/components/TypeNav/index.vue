@@ -14,32 +14,46 @@
         <a href="###">秒杀</a>
       </nav>
       <div class="sort">
-        <div class="all-sort-list2" @mouseenter="mouseIsInCategory=true"
-        @mouseleave="mouseIsInCategory=false">
-          <div class="item" v-for="category1,index in category1List" :key="category1.id"
-          :class="{active:mouseEnterIndex===index}"
-          @mouseenter="mouseEnterIndex=category1MouseEnterThrottle(index,category1)"
-          @mouseleave="mouseEnterIndex=-1">
+        <div
+          class="all-sort-list2"
+          @mouseenter="mouseIsInCategory = true"
+          @mouseleave="mouseIsInCategory = false"
+        >
+          <div
+            class="item"
+            v-for="(category1, index) in category1List"
+            :key="category1.id"
+            :class="{ active: mouseEnterIndex === index }"
+            @mouseenter="
+               category1MouseEnterThrottle(index, category1)
+            "
+            @mouseleave="mouseEnterIndex = -1"
+          >
             <h3>
-              <a >{{category1.name}}</a>
+              <a>{{ category1.name }}</a>
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
-                <dl class="fore" v-for="category2 in category1" :key="category2.id">
+                <dl
+                  class="fore"
+                  v-for="category2 in category1.children"
+                  :key="category2.id"
+                >
                   <dt>
-                    <a >{{category2.name}}</a>
+                    <a>{{ category2.name }}</a>
                   </dt>
                   <dd>
-                    <em v-for="category3 in category2.children" :key="category3.id"
+                    <em
+                      v-for="category3 in category2.children"
+                      :key="category3.id"
                     >
-                      <a>{{category3.name}}</a>
+                      <a>{{ category3.name }}</a>
                     </em>
                   </dd>
                 </dl>
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>
@@ -47,31 +61,32 @@
 </template>
 
 <script>
-import {reqCategory1List,reqCategory2List, reqCategory3List} from "@/api/home";
+import {
+  reqCategory1List,
+  reqCategory2List,
+  reqCategory3List,
+} from "@/api/home";
 import { throttle } from "lodash";
 
 export default {
   name: "TypeNav",
-  data(){
-    return{ category1List:[],
-    mouseEnterIndex:-1,
-    mouseIsInCategory:false}
-   
+  data() {
+    return { category1List: [], mouseEnterIndex: -1, mouseIsInCategory: false };
   },
-  mounted(){
+  mounted() {
     this.getCategory1List(),
-     //2. 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数
-    this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
-      //leading:让事件函数在节流开始前执行  
+      //2. 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数
+     this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
+      //leading:让事件函数在节流开始前执行
       leading: true,
       //trailing配置项让函数在节流结束后执行最后一次
       trailing: true,
-    }); 
+    });
   },
-  methods:{
-    async getCategory1List (){
+  methods: {
+    async getCategory1List() {
       const result = await reqCategory1List();
-      this.category1List = result
+      this.category1List = result;
     },
     async category1MouseEnter(index, category1) {
       //看门狗??解决节流之后 鼠标移出整个区域 还会再执行一次函数的问题
@@ -80,23 +95,23 @@ export default {
       this.mouseEnterIndex = index;
 
       // 判断children属性是否存在
-      if(category1.children) return
+      if (category1.children) return;
 
       // 根据一级分类列表id发送二级分类列表数据请求
       const result = await reqCategory2List(category1.id);
 
       // 根据二级分类列表id发送三级分类列表数据请求
       result.forEach(async (item) => {
-        const result = await reqCategory3List(item.id)
-        this.$set(item,'children',result)
+        const result = await reqCategory3List(item.id);
+        this.$set(item, "children", result);
       });
 
       // 响应式给一级分类列表添加响应式数据
-      this.$set(this.category1List[index],'children',result)
+      this.$set(this.category1List[index], "children", result);
     },
     //3.定义一个函数占位,将来赋值为 处理过的节流函数(一级分类鼠标移入的节流函数)
     category1MouseEnterThrottle() {},
-  }
+  },
 };
 </script>
 
@@ -143,8 +158,10 @@ export default {
 
       .all-sort-list2 {
         .item {
-          &.active{
-            h3{background: yellowgreen;}
+          &.active {
+            h3 {
+              background: yellowgreen;
+            }
           }
           h3 {
             line-height: 30px;
