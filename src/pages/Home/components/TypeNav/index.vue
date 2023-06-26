@@ -14,7 +14,8 @@
         <a href="###">秒杀</a>
       </nav>
       <div class="sort">
-        <div class="all-sort-list2">
+        <div class="all-sort-list2" @mouseenter="mouseIsInCategory=true"
+        @mouseleave="mouseIsInCategory=false">
           <div class="item" v-for="category1,index in category1List" :key="category1.id"
           :class="{active:mouseEnterIndex===index}"
           @mouseenter="mouseEnterIndex=category1MouseEnterThrottle(index,category1)"
@@ -53,14 +54,15 @@ export default {
   name: "TypeNav",
   data(){
     return{ category1List:[],
-    mouseEnterIndex:-1}
+    mouseEnterIndex:-1,
+    mouseIsInCategory:false}
    
   },
   mounted(){
     this.getCategory1List(),
      //2. 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数
     this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
-      //leading:让事件函数在节流开始前执行
+      //leading:让事件函数在节流开始前执行  
       leading: true,
       //trailing配置项让函数在节流结束后执行最后一次
       trailing: true,

@@ -64,3 +64,14 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## 首页-三级分类的响应式添加和渲染
 
 ## 首页-三级分类节流处理
+- 防止鼠标移入移出过快，添加节流处理
+    - 下载引入lodash插件
+    - 利用lodash的节流函数
+    ```js
+    this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
+      //leading:让事件函数在节流开始前执行
+      leading: true,
+      //trailing配置项让函数在节流结束后执行最后一次
+      trailing: true,
+    }); 
+    ```
