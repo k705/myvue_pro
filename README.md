@@ -267,7 +267,7 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 要获取category1Id、category2Id、category3Id、categoryName，添加自定义属性保存`:data-category3Id="category3.id"`
     - 编程式路由导航
         ```js
-        this.$router.push({ path: "Search",query: {
+        this.$router.push({ name: "Search",query: {
           category1id: category1id,
           category2Id: category2id,
           category3Id: category3id,

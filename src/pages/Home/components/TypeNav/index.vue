@@ -152,7 +152,7 @@ export default {
       const params = this.$route.params;
       // 编程式路由导航
       this.$router.push({
-        path: "Search",
+        name: "Search",
         query: {
           category1id: category1id,
           category2Id: category2id,
