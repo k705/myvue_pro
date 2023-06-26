@@ -248,3 +248,9 @@ router.afterEach((to, from, next) => { NProgress.done() })
         - 在一级列表对应的div中，v-for遍历请求到的数据
 
 2. 首页一级分类列表的动态样式
+
+3. 首页-二级分类的响应式添加和渲染
+    - bug
+        - methods中用到的数据要加this！！！
+    - 响应式添加对象属性
+        - this.$set(对象，"属性名",属性值)

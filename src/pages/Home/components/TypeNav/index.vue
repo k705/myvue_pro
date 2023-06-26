@@ -20,7 +20,7 @@
             v-for="(category1, index) in category1List"
             :key="category1.id"
             :class="{ active: mouseEnterIndex === index }"
-            @mouseenter="mouseEnterIndex = index"
+            @mouseenter="category1MouseEnter(index,category1.id)"
             @mouseleave="mouseEnterIndex = -1"
           >
             <h3>
@@ -28,9 +28,9 @@
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
-                <dl class="fore">
+                <dl class="fore" v-for="category2 in category1.children" :key="category2.id">
                   <dt>
-                    <a href="">电子书</a>
+                    <a >{{category2.name}}</a>
                   </dt>
                   <dd>
                     <em>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { reqCategory1List } from "@/api/home";
+import { reqCategory1List, reqCategory2List } from "@/api/home";
 export default {
   name: "TypeNav",
   data() {
@@ -79,6 +79,15 @@ export default {
       const result = await reqCategory1List();
       this.category1List = result;
     },
+   async  category1MouseEnter(index,id){
+    //  保存鼠标移入下标
+    this.mouseEnterIndex = index
+    // 获取二级列表数据
+     const result = await reqCategory2List(id)
+    //  设置响应式数据
+    this.$set(this.category1List[index],'children',result)
+  
+   }
   },
 };
 </script>
