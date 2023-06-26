@@ -20,7 +20,7 @@
             v-for="(category1, index) in category1List"
             :key="category1.id"
             :class="{ active: mouseEnterIndex === index }"
-            @mouseenter="category1MouseEnter(index, category1)"
+            @mouseenter="category1MouseEnterThrottle(index, category1)"
             @mouseleave="mouseEnterIndex = -1"
           >
             <h3>
@@ -54,6 +54,7 @@
 
 <script>
 import { reqCategory1List, reqCategory2List,reqCategory3List } from "@/api/home";
+import { throttle } from "lodash";
 export default {
   name: "TypeNav",
   data() {
@@ -65,7 +66,14 @@ export default {
     };
   },
   mounted() {
-    this.getCategory1List();
+    this.getCategory1List()
+    //2. 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数
+    this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
+      //leading:让事件函数在节流开始前执行
+      leading: true,
+      //trailing配置项让函数在节流结束后执行最后一次
+      trailing: true,
+    });
   },
   methods: {
     async getCategory1List() {
@@ -101,6 +109,9 @@ export default {
       // 响应式添加方式2：this.$set添加对象的属性
       // this.category1List[index].children = result
     },
+    //3.定义一个函数占位,将来赋值为 处理过的节流函数(一级分类鼠标移入的节流函数)
+    category1MouseEnterThrottle() {},
+
   },
 };
 </script>

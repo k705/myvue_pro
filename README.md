@@ -254,3 +254,6 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - home.js中根据二级分类列表id请求三级列表数据
     - 把一个二级中所有的三级全部请求到，并添加在对应的二级的children属性上
     - 遍历二级列表,拿到每一个id请求对应的三级,并添加在children上
+
+5. 首页-三级分类节流处理
+    - 安装lodash
