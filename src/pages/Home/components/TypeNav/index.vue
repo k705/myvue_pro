@@ -14,7 +14,11 @@
         <a href="###">秒杀</a>
       </nav>
       <div class="sort">
-        <div class="all-sort-list2">
+        <div
+          class="all-sort-list2"
+          @mouseenter="mouseIsInCategory = true"
+          @mouseleave="mouseIsInCategory = false"
+        >
           <div
             class="item"
             v-for="(category1, index) in category1List"
@@ -37,10 +41,12 @@
                     <a>{{ category2.name }}</a>
                   </dt>
                   <dd>
-                    <em v-for="category3 in category2.children" :key="category3.id">
-                      <a >{{category3.name}}</a>
+                    <em
+                      v-for="category3 in category2.children"
+                      :key="category3.id"
+                    >
+                      <a>{{ category3.name }}</a>
                     </em>
-                   
                   </dd>
                 </dl>
               </div>
@@ -53,7 +59,11 @@
 </template>
 
 <script>
-import { reqCategory1List, reqCategory2List,reqCategory3List } from "@/api/home";
+import {
+  reqCategory1List,
+  reqCategory2List,
+  reqCategory3List,
+} from "@/api/home";
 import { throttle } from "lodash";
 export default {
   name: "TypeNav",
@@ -63,10 +73,12 @@ export default {
       category1List: [],
       // 2.保存鼠标移入的列表下标
       mouseEnterIndex: -1,
+      // 3.保存鼠标是否在三级分类区域
+      mouseIsInCategory: false,
     };
   },
   mounted() {
-    this.getCategory1List()
+    this.getCategory1List();
     //2. 把一级分类鼠标移入事件函数 交给 throttle函数 得到一个新的节流函数
     this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
       //leading:让事件函数在节流开始前执行
@@ -91,7 +103,7 @@ export default {
       // 1.保存鼠标移入的下标
       this.mouseEnterIndex = index;
       // 如果children属性存在则不再发送对应的二级请求
-      if(category1.children) return
+      if (category1.children) return;
 
       // 2.根据一级分类的id发送二级分类请求数据
       const result = await reqCategory2List(category1.id);
@@ -99,10 +111,10 @@ export default {
       //我们把一个二级的中所有的三级全部请求到，并添加在对应的二级的children属性上
       //遍历二级列表,拿到每一个id请求对应的三级,并添加在children上
       result.forEach(async (item) => {
-        item.children = []
-        const result = await reqCategory3List(item.id)
+        // item.children = [];
+        const result = await reqCategory3List(item.id);
         // item.children = result
-        this.$set(item,"children",result)
+        this.$set(item, "children", result);
       });
 
       // 3.把一级分类请求到的二级分类数据，响应式地添加到一级分类对象的children属性上
@@ -114,7 +126,6 @@ export default {
     },
     //3.定义一个函数占位,将来赋值为 处理过的节流函数(一级分类鼠标移入的节流函数)
     category1MouseEnterThrottle() {},
-
   },
 };
 </script>
