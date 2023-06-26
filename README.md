@@ -250,3 +250,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 在TypeNav组件中引入请求的数据
     - 响应式添加方式1：this.$set添加对象的属性
     
+4. 首页-三级分类的响应式添加和渲染
+    - 

@@ -15,38 +15,37 @@
       </nav>
       <div class="sort">
         <div class="all-sort-list2">
-          <div class="item " v-for="category1,index in category1List" :key="category1.id"
-        :class="{active:mouseEnterIndex===index}"
-          @mouseenter="category1MouseEnter(index,category1.id)"
-          @mouseleave="mouseEnterIndex=-1">
+          <div
+            class="item"
+            v-for="(category1, index) in category1List"
+            :key="category1.id"
+            :class="{ active: mouseEnterIndex === index }"
+            @mouseenter="category1MouseEnter(index, category1)"
+            @mouseleave="mouseEnterIndex = -1"
+          >
             <h3>
-              <a >{{category1.name}}</a>
+              <a>{{ category1.name }}</a>
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
-                <dl class="fore" v-for="category2 in category1.children" :key="category2.id">
+                <dl
+                  class="fore"
+                  v-for="category2 in category1.children"
+                  :key="category2.id"
+                >
                   <dt>
-                    <a >{{category2.name}}</a>
+                    <a>{{ category2.name }}</a>
                   </dt>
                   <dd>
-                    <em>
-                      <a href="">婚恋/两性</a>
+                    <em v-for="category3 in category2.children" :key="category3.id">
+                      <a >{{category3.name}}</a>
                     </em>
-                    <em>
-                      <a href="">文学</a>
-                    </em>
-                    <em>
-                      <a href="">经管</a>
-                    </em>
-                    <em>
-                      <a href="">畅读VIP</a>
-                    </em>
+                   
                   </dd>
                 </dl>
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>
@@ -54,42 +53,55 @@
 </template>
 
 <script>
-import {reqCategory1List,reqCategory2List} from "@/api/home"
+import { reqCategory1List, reqCategory2List,reqCategory3List } from "@/api/home";
 export default {
   name: "TypeNav",
-  data(){
-    return{
+  data() {
+    return {
       // 1.一级列表请求数据
-      category1List:[],
+      category1List: [],
       // 2.保存鼠标移入的列表下标
-      mouseEnterIndex:-1
-    }
+      mouseEnterIndex: -1,
+    };
   },
-  mounted(){
-this.getCategory1List()
+  mounted() {
+    this.getCategory1List();
   },
-  methods:{
-    async getCategory1List (){
-      const result  = await reqCategory1List();
+  methods: {
+    async getCategory1List() {
+      const result = await reqCategory1List();
       // 响应式数据方式2：添加一个children属性
-     /*  result.forEach(item => {
+      /*  result.forEach(item => {
         item.children = []
       }); */
       this.category1List = result;
     },
-    async category1MouseEnter(index,id){
-        // 1.保存鼠标移入的下标
-        this.mouseEnterIndex = index
-        // 2.根据一级分类的id发送二级分类请求数据
-        const result = await reqCategory2List(id);
-        // 3.把一级分类请求到的二级分类数据，响应式地添加到一级分类对象的children属性上 
+    async category1MouseEnter(index, category1) {
+      // 1.保存鼠标移入的下标
+      this.mouseEnterIndex = index;
+      // 如果children属性存在则不再发送对应的二级请求
+      if(category1.children) return
+
+      // 2.根据一级分类的id发送二级分类请求数据
+      const result = await reqCategory2List(category1.id);
+      //【插播】:因为二级和三级应该是一起的！！！但是后台数据没有给我们一起返回，需要再次请求三级
+      //我们把一个二级的中所有的三级全部请求到，并添加在对应的二级的children属性上
+      //遍历二级列表,拿到每一个id请求对应的三级,并添加在children上
+      result.forEach(async (item) => {
+        item.children = []
+        const result = await reqCategory3List(item.id)
+        // item.children = result
+        this.$set(item,"children",result)
+      });
+
+      // 3.把一级分类请求到的二级分类数据，响应式地添加到一级分类对象的children属性上
       // this.category1List[index].children = result;
       //  响应式添加方式1：this.$set添加对象的属性
-      this.$set(this.category1List[index],'children',result)
+      this.$set(this.category1List[index], "children", result);
       // 响应式添加方式2：this.$set添加对象的属性
       // this.category1List[index].children = result
-      }
-  }
+    },
+  },
 };
 </script>
 
@@ -136,8 +148,8 @@ this.getCategory1List()
 
       .all-sort-list2 {
         .item {
-          &.active{
-            h3{
+          &.active {
+            h3 {
               background: yellowgreen;
             }
           }
@@ -214,7 +226,6 @@ this.getCategory1List()
             }
           }
         }
-
       }
     }
   }
