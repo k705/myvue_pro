@@ -81,3 +81,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## header组件点击搜索跳转search
 
 ## 切换TypeNav为公共组件
+
+## TypeNav组件的条件渲染设置
