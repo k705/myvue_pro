@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h2>Search</h2>
+      <h2><TypeNav /></h2>
   </div>
 </template>
 

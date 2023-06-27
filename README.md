@@ -293,4 +293,4 @@ router.afterEach((to, from, next) => { NProgress.done() })
 
 ## TypeNav组件的条件渲染设置
 
-
+## 点击TypeNav后控制条件渲染
