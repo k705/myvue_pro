@@ -6,8 +6,10 @@
             <!--banner轮播-->
             <div class="swiper-container" id="mySwiper">
               <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img src="./images/banner1.jpg" />
+                <div class="swiper-slide" 
+                v-for="banner in bannerList"
+                :key="banner.id">
+                  <img :src="banner.imgUrl" />
                 </div>
               </div>
               <!-- 如果需要分页器 -->
@@ -106,9 +108,20 @@ import { reqBannerList } from "@/api/home";
 
 export default {
   name:"List",
+  data(){
+    return{
+          bannerList:[]
+    }
+
+  },
   mounted(){
-    const result  = reqBannerList()
-    console.log(result);
+  this.getBannerList()
+  },
+  methods:{
+    async getBannerList(){
+      const result = await reqBannerList();
+      this.bannerList = result;
+    }
   }
 }
 </script>

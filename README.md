@@ -308,3 +308,9 @@ router.afterEach((to, from, next) => { NProgress.done() })
 4. main.js中引入mock文件夹
 5. 轮播图区域引入mock请求
 6. 上线后把requestMock改为request，发送真正的请求
+
+## List中banner的获取及渲染
+1. methods中封装函数获取数据
+2. mounted中调用函数
+3. data中初始化数据
+4. html中遍历数据
