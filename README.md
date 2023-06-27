@@ -279,3 +279,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
 10. 点击TypeNav后控制条件渲染
 
 11. mock拦截请求的配置
+
+12. List中banner的获取及渲染
