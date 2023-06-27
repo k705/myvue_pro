@@ -18,3 +18,8 @@ export const reqCategory3List = (category2Id) => {
 export const reqBannerList = () => {
     return requestMock.get(`/banner/list`);
   };
+
+//   5.请求Floor组件中的轮播图数据
+export const reqFloorList = () => {
+    return requestMock.get(`/floor/list`)
+}

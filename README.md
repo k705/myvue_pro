@@ -281,3 +281,9 @@ router.afterEach((to, from, next) => { NProgress.done() })
 11. mock拦截请求的配置
 
 12. List中banner的获取及渲染
+
+13. floor组件的mock数据获取及数据渲染
+
+14. swiper的引入及使用
+
+15. 因为有多个Floor组件，所以在home组件中请求数据并遍历出多个Floor

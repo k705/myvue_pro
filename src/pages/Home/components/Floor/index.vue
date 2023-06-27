@@ -45,19 +45,8 @@
               <img src="./images/floor-1-1.png" />
             </div>
             <div class="floorBanner">
-              <div class="swiper-container" id="floor1Swiper">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <img src="./images/floor-1-b01.png" />
-                  </div>
-                </div>
-                <!-- 如果需要分页器 -->
-                <div class="swiper-pagination"></div>
+                          <Swiper :list="floor.carouselList" />
 
-                <!-- 如果需要导航按钮 -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-              </div>
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
@@ -90,6 +79,7 @@
 <script>
 export default {
   name: "Floor",
+  props:["floor"]
 };
 </script>
 
