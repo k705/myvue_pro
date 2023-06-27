@@ -102,8 +102,14 @@
 </template>
 
 <script>
+import { reqBannerList } from "@/api/home";
+
 export default {
-  name:"List"
+  name:"List",
+  mounted(){
+    const result  = reqBannerList()
+    console.log(result);
+  }
 }
 </script>
 

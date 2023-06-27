@@ -298,3 +298,13 @@ router.afterEach((to, from, next) => { NProgress.done() })
 
 ## 点击TypeNav后控制条件渲染
     - 在toshow方法中导航到search组件后设置 保存鼠标是否移入的属性为false  从而点击后不会一直显示
+
+## swiper的基础使用
+
+## mock拦截请求的配置
+1. 新建ajax实例 baseURL改为/
+2. 新建mock文件夹拦截axios请求
+3. 引入mock文件，发送请求
+4. main.js中引入mock文件夹
+5. 轮播图区域引入mock请求
+6. 上线后把requestMock改为request，发送真正的请求
