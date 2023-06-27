@@ -1,2 +1,4 @@
 import request from "./request"
-export  {request}
+import requestMock from "./requestMock";
+
+export { request, requestMock };

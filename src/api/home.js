@@ -1,4 +1,4 @@
-import { request } from "@/request"
+import { request ,requestMock     } from "@/request"
 
 // 1.请求一级分类列表数据
 export const reqCategory1List = () => {

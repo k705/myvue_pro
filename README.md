@@ -302,7 +302,8 @@ router.afterEach((to, from, next) => { NProgress.done() })
 ## swiper的基础使用
 
 ## mock拦截请求的配置
-1. 新建ajax实例 baseURL改为/
+1. 安装下载`npm i mockjs`
+1. 新建ajax实例 baseURL改为/ index文件中引入requestMock
 2. 新建mock文件夹拦截axios请求
 3. 引入mock文件，发送请求
 4. main.js中引入mock文件夹
