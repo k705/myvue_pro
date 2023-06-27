@@ -25,7 +25,7 @@ export default [
         component:Register
     },
     {
-        path: "/search",
+        path: "/search:keyword?",
         name: "Search",
         component:Search
     },

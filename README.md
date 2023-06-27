@@ -269,4 +269,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
 
 7. header组件点击搜索跳转search
     - 编程式路由导航
+    - routes中占位
     - 响应式数据
