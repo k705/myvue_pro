@@ -1,19 +1,10 @@
 <template>
   <!-- 商品分类导航 -->
   <div class="type-nav">
-    <div class="container">
-      <h2 class="all">全部商品分类</h2>
-      <nav class="nav">
-        <a href="###">服装城</a>
-        <a href="###">美妆馆</a>
-        <a href="###">尚品汇超市</a>
-        <a href="###">全球购</a>
-        <a href="###">闪购</a>
-        <a href="###">团购</a>
-        <a href="###">有趣</a>
-        <a href="###">秒杀</a>
-      </nav>
-      <div class="sort">
+    <div class="container" @mouseenter="mouseIsInNav=true" @mouseleave="mouseIsInNav=false">
+      <div>
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort">
         <div
           class="all-sort-list2"
           @mouseenter="mouseIsInCategory = true"
@@ -67,6 +58,19 @@
           </div>
         </div>
       </div>
+      </div>
+      
+      <nav class="nav">
+        <a href="###">服装城</a>
+        <a href="###">美妆馆</a>
+        <a href="###">尚品汇超市</a>
+        <a href="###">全球购</a>
+        <a href="###">闪购</a>
+        <a href="###">团购</a>
+        <a href="###">有趣</a>
+        <a href="###">秒杀</a>
+      </nav>
+      
     </div>
   </div>
 </template>
@@ -89,6 +93,7 @@ export default {
       mouseEnterIndex: -1,
       // 保存鼠标是否在三级分类区域
       mouseIsInCategory: false,
+      mouseIsInNav:false
     };
   },
   mounted() {
@@ -151,6 +156,13 @@ export default {
       });
     },
   },
+  computed:{
+    categoryIsShow(){
+     if(this.$route.name === "Home" ) return
+
+     return this.mouseIsInNav
+    }
+  }
 };
 </script>
 

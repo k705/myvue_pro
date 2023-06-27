@@ -273,3 +273,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 响应式数据
 
 8. 切换TypeNav为公共组件
+
+9. TypeNav组件的条件渲染设置
