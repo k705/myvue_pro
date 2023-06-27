@@ -37,11 +37,12 @@
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
+            v-model="keyword"
           />
           <button
             class="sui-btn btn-xlarge btn-danger"
             type="button"
-            @click="$router.push('/search')"
+            @click="toSearch"
           >
             搜索
           </button>
@@ -53,8 +54,25 @@
 
 <script>
 export default {
-name:"Header"
-}
+  name: "Header",
+  data() {
+    return {
+      keyword: "",
+    };
+  },
+  methods: {
+    toSearch() {
+      const params = this.$route.query;
+      this.$router.push({
+        name: "Search",
+        params: {
+          keyword: this.keyword || null,
+        },
+        query,
+      });
+    },
+  },
+};
 </script>
 
 <style scoped lang="less">

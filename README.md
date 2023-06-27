@@ -266,3 +266,7 @@ router.afterEach((to, from, next) => { NProgress.done() })
         - 设置：`:data-xxx="xxx`
         - 获取：`e.target.dataset.xxx`
         - 自定义属性值都小写
+
+7. header组件点击搜索跳转search
+    - 编程式路由导航
+    - 响应式数据
