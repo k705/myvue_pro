@@ -277,3 +277,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
 9. TypeNav组件的条件渲染设置
 
 10. 点击TypeNav后控制条件渲染
+
+11. mock拦截请求的配置
