@@ -292,5 +292,9 @@ router.afterEach((to, from, next) => { NProgress.done() })
 
 
 ## TypeNav组件的条件渲染设置
+    - 增加一个计算属性控制typenav的显示
+    - 如果在主页则一直显示
+    - 如果不在主页则通过鼠标是否移入来显示隐藏 v-show
 
 ## 点击TypeNav后控制条件渲染
+    - 在toshow方法中导航到search组件后设置 保存鼠标是否移入的属性为false  从而点击后不会一直显示

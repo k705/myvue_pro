@@ -175,7 +175,7 @@ export default {
       // 如果在home页则一直展示
       if(this.$route.name === "Home") return true
       // 如果不在home页，则看鼠标是否在三级分类区域
-        return this.mouseIsInNav
+        return this.mouseIsInNav 
     }
   }
 };
