@@ -63,12 +63,13 @@ export default {
   methods: {
     toSearch() {
       // 点击搜索的时候先获取当前路由的query参数并和params合并
+      const query = this.$route.query;
       this.$router.push({
         name: "Search",
-        query: {
+        params: {
           keyword: this.keyword || null,
         },
-        params,
+        query,
       });
     },
   },
