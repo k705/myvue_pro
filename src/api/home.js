@@ -1,5 +1,5 @@
 // 1.一级分类列表数据请求
-import { request } from "@/request";
+import { request,requestMock } from "@/request";
 export const reqCategory1List = ()=>{
  return request.get(`/admin/product/getCategory1`)
 }

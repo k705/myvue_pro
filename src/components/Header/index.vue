@@ -58,7 +58,7 @@ export default {
 name:"Header",
 data(){
   return{
-    keyword
+    keyword:""
   }
 },
 methods:{
