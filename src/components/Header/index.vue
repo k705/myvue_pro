@@ -54,23 +54,25 @@
 
 <script>
 export default {
-name:'Header',
-data(){
-  return{
-    keyword:""
-  }
-},
-methods:{
-  toSearch(){
-    this.$router.push({
-      name:"Search",
-      params:{
-        keyword:this.keyword || null
-      }
-    })
-  }
-}
-}
+  name: "Header",
+  data() {
+    return {
+      keyword: "",
+    };
+  },
+  methods: {
+    toSearch() {
+      // 点击搜索的时候先获取当前路由的query参数并和params合并
+      this.$router.push({
+        name: "Search",
+        query: {
+          keyword: this.keyword || null,
+        },
+        params,
+      });
+    },
+  },
+};
 </script>
 
 <style scoped lang="less">
