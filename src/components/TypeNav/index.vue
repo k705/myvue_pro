@@ -2,7 +2,64 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <h2 class="all">全部商品分类</h2>
+      <div @mouseenter="mouseIsInNav=true"  @mouseleave="mouseIsInNav=false">
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort" v-show="categoryIsShow">
+          <div
+            class="all-sort-list2"
+            @mouseenter="mouseIsInCategory = true"
+            @mouseleave="mouseIsInCategory = false"
+            @click="toSearch"
+          >
+            <div
+              class="item"
+              v-for="(category1, index) in category1List"
+              :key="category1.id"
+              :class="{ active: mouseEnterIndex === index }"
+              @mouseenter="category1MouseEnterThrottle(index, category1)"
+              @mouseleave="mouseEnterIndex = -1"
+            >
+              <h3>
+                <a
+                  :data-category1Id="category1.id"
+                  :data-categoryName="category1.name"
+                  >{{ category1.name }}</a
+                >
+              </h3>
+              <div class="item-list clearfix">
+                <div class="subitem">
+                  <dl
+                    class="fore"
+                    v-for="category2 in category1.children"
+                    :key="category2.id"
+                  >
+                    <dt>
+                      <a
+                        :data-category2Id="category2.id"
+                        :data-categoryName="category2.name"
+                        >{{ category2.name }}</a
+                      >
+                    </dt>
+                    <dd>
+                      <em
+                        v-for="category3 in category2.children"
+                        :key="category3.id"
+                      >
+                        <a
+                          :data-category3Id="category3.id"
+                          :data-categoryName="category3.name"
+                          >{{ category3.name }}</a
+                        >
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <nav class="nav">
         <a href="###">服装城</a>
         <a href="###">美妆馆</a>
@@ -13,60 +70,6 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort">
-        <div
-          class="all-sort-list2"
-          @mouseenter="mouseIsInCategory = true"
-          @mouseleave="mouseIsInCategory = false"
-          @click="toSearch"
-        >
-          <div
-            class="item"
-            v-for="(category1, index) in category1List"
-            :key="category1.id"
-            :class="{ active: mouseEnterIndex === index }"
-            @mouseenter="category1MouseEnterThrottle(index, category1)"
-            @mouseleave="mouseEnterIndex = -1"
-          >
-            <h3>
-              <a
-                :data-category1Id="category1.id"
-                :data-categoryName="category1.name"
-                >{{ category1.name }}</a
-              >
-            </h3>
-            <div class="item-list clearfix">
-              <div class="subitem">
-                <dl
-                  class="fore"
-                  v-for="category2 in category1.children"
-                  :key="category2.id"
-                >
-                  <dt>
-                    <a
-                      :data-category2Id="category2.id"
-                      :data-categoryName="category2.name"
-                      >{{ category2.name }}</a
-                    >
-                  </dt>
-                  <dd>
-                    <em
-                      v-for="category3 in category2.children"
-                      :key="category3.id"
-                    >
-                      <a
-                        :data-category3Id="category3.id"
-                        :data-categoryName="category3.name"
-                        >{{ category3.name }}</a
-                      >
-                    </em>
-                  </dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -88,6 +91,8 @@ export default {
       mouseEnterIndex: -1,
       // 3.保存鼠标是否在三级分类区域
       mouseIsInCategory: false,
+      //4.保存鼠标是否在整个大的三级分类的区域,用来控制三级列表的条件渲染
+      mouseIsInNav:false
     };
   },
   mounted() {
@@ -163,6 +168,14 @@ export default {
       });
     },
   },
+  computed:{
+    categoryIsShow(){
+      // 如果在home页则一直展示
+      if(this.$route.name === "Home") return true
+      // 如果不在home页，则看鼠标是否在三级分类区域
+        return this.mouseIsInNav
+    }
+  }
 };
 </script>
 

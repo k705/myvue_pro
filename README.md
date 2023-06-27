@@ -291,3 +291,6 @@ router.afterEach((to, from, next) => { NProgress.done() })
 2. 删除home组件中的引入
 
 
+## TypeNav组件的条件渲染设置
+
+

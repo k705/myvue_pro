@@ -57,16 +57,17 @@ export default {
   name: "Header",
   data() {
     return {
-      keyword: "",
+      keyword:""
     };
   },
   methods: {
     toSearch() {
-      // 点击搜索的时候先获取当前路由的query参数并和params合并
+      //点击搜索的时候先获取当前路由的query参数
       const query = this.$route.query;
+      // 编程式路由导航
       this.$router.push({
         name: "Search",
-        params: {
+        params:{
           keyword: this.keyword || null,
         },
         query,
@@ -75,7 +76,6 @@ export default {
   },
 };
 </script>
-
 <style scoped lang="less">
 .header {
   & > .top {
