@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TypeNav from "./components/TypeNav";
+
 import List from "./components/List";
 import Recommed from "./components/Recommed";
 import Rank from "./components/Rank";
@@ -22,7 +22,7 @@ import Brand from "./components/Brand";
 export default {
   name: "Home",
   components: {
-    TypeNav,
+
     List,
     Recommed,
     Rank,
