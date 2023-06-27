@@ -1,18 +1,13 @@
-// 懒加载  异步组件
-const Home = () => import('@/pages/Home')
-const Search = () => import("@/pages/Search");
-const Login = () => import("@/pages/Login");
-const Register = () => import("@/pages/Register");
-const NotFound = () => import("@/pages/404");
+const Home = ()=>import("@/pages/Home")
+const Login = ()=>import("@/pages/Login")
+const Register = ()=>import("@/pages/Register")
+const Search = ()=>import("@/pages/Search")
+const NotFound = () => import("@/pages/404")
+
 export default [
     {
         path: "/",
-        redirect: "/home"
-    },
-    {
-        path: "/login",
-        name: "Login",
-        component:Login
+        redirect:"/home"
     },
     {
         path: "/home",
@@ -20,18 +15,27 @@ export default [
         component:Home
     },
     {
+        path: "/login",
+        name: "Login",
+        component: Login,
+        meta: {
+            FooterHidden:true
+        }
+    },{
         path: "/register",
         name: "Register",
-        component:Register
-    },
-    {
+        component: Register,
+        meta: {
+            FooterHidden:true
+        }
+        
+    },{
         path: "/search:keyword?",
         name: "Search",
         component:Search
-    },
-    {
-        path: "*",
+    },{
+        path: "/*",
         name: "NotFound",
         component:NotFound
     },
-] 
+]

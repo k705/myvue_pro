@@ -271,3 +271,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 编程式路由导航
     - routes中占位
     - 响应式数据
+
+8. 切换TypeNav为公共组件
