@@ -104,6 +104,7 @@ export default {
       //trailing配置项让函数在节流结束后执行最后一次
       trailing: true,
     });
+   
   },
   methods: {
     async getCategory1List() {
@@ -166,6 +167,7 @@ export default {
         },
         params,
       });
+       this.mouseIsInNav = false
     },
   },
   computed:{
