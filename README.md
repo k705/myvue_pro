@@ -277,3 +277,11 @@ router.afterEach((to, from, next) => { NProgress.done() })
       });
       ```
       - bug:`this.$router.push`写成了`this.$route.push`！！
+
+## header组件点击搜索跳转search
+1. 动态路由传参
+    - v-model响应式数据
+2. 编程式路由导航
+    - params不能和path一起用
+    - params不能为空字符串
+    - 在routes中给params占位
