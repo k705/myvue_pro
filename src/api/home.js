@@ -20,3 +20,8 @@ export const reqCategory3List = (category2Id) => {
 export const reqBannerList = () => {
     return requestMock.get(`/banner/list`);
   };
+
+  //5. 请求楼层信息
+export const reqFloorList = () => {
+    return requestMock.get(`/floor/list`);
+  };

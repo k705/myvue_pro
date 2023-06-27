@@ -315,3 +315,9 @@ router.afterEach((to, from, next) => { NProgress.done() })
 2. mounted中调用函数
 3. data中初始化数据
 4. html中遍历数据
+
+## swiper的引入及使用
+1. `npm i swiper@5`
+2. 封装swiper公共组件
+3. 在入口文件main中引入swiper的css
+4. 在需要的组件的轮播图中插入Swiper组件
