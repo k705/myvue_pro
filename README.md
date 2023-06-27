@@ -88,3 +88,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## List中banner的获取及渲染
 
+## swiper的引入及使用
