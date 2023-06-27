@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     toSearch() {
-      const params = this.$route.query;
+      const query = this.$route.query;
       this.$router.push({
         name: "Search",
         params: {
