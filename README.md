@@ -87,3 +87,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## mock拦截请求的配置
 
 ## List中banner的获取及渲染
+
