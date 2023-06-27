@@ -83,3 +83,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## 切换TypeNav为公共组件
 
 ## TypeNav组件的条件渲染设置
+
+## mock拦截请求的配置
