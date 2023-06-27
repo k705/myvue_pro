@@ -30,7 +30,7 @@ export default [
         }
         
     },{
-        path: "/search",
+        path: "/search:keyword?",
         name: "Search",
         component:Search
     },{

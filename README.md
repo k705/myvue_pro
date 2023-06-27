@@ -77,3 +77,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     ```
 
 ## 编程式路由导航三级列表到search
+
+## header组件点击搜索跳转search
