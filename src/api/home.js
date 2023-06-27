@@ -14,3 +14,7 @@ export const reqCategory2List = (category1Id) => {
 export const reqCategory3List = (category2Id) => {
     return request.get(`/admin/product/getCategory3/${category2Id}`)
 }
+//4. 请求List组件中的轮播图数据
+export const reqBannerList = () => {
+    return requestMock.get(`/banner/list`);
+  };
