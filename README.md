@@ -275,3 +275,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
 8. 切换TypeNav为公共组件
 
 9. TypeNav组件的条件渲染设置
+
+10. 点击TypeNav后控制条件渲染

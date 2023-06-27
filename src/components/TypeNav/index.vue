@@ -154,6 +154,7 @@ export default {
         },
         params
       });
+      this.mouseIsInNav = false
     },
   },
   computed:{
