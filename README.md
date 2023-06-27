@@ -285,3 +285,9 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - params不能和path一起用
     - params不能为空字符串
     - 在routes中给params占位
+
+## 切换TypeNav为公共组件
+1. 在main.js中全局注册公共组件`Vue.component("TypeNav",TypeNav)`
+2. 删除home组件中的引入
+
+
