@@ -321,3 +321,17 @@ router.afterEach((to, from, next) => { NProgress.done() })
 2. 封装swiper公共组件
 3. 在入口文件main中引入swiper的css
 4. 在需要的组件的轮播图中插入Swiper组件
+
+## 在组件中拿到动态路由参数
+1. 动态路由中监听动态路由参数的改变和获取动态路由参数的三个方法：
+    - watch：监听动态路由改变，之后做一些逻辑
+    - computed：监听动态路由改变+得到值
+    - 路由传参props：使用props得到动态路由的值
+2. props三种写法：
+    - 布尔值：默认把params参数通过props传递给组件
+    - 对象：把对象内部的属性作为props传给组件
+    - 函数：把函数return的对象中的属性作为props传给组件，接收当前的$route作为参数
+3. 平台属性列表：attrsList
+    销售属性列表：goodsList 
+
+## search-优化组件中请求api的参数取值

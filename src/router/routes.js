@@ -34,7 +34,13 @@ export default [
     {
         path: "/search/:keyword?",
         name: "Search",
-        component:Search
+        component:Search,
+        props($route) {
+            return {
+                ...$route.params,
+                ...$route.query
+            }
+        }
     },
     {
         path: "*",
