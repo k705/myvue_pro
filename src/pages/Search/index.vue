@@ -11,10 +11,8 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="searchParams.trademark">品牌：{{searchParams.trademark.split(":")[1]}}<i @click="searchParams.trademark=''">×</i></li>
+           
           </ul>
         </div>
 
