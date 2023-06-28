@@ -333,5 +333,8 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 函数：把函数return的对象中的属性作为props传给组件，接收当前的$route作为参数
 3. 平台属性列表：attrsList
     销售属性列表：goodsList 
+4. 初始化获取不到props值，所以在watch中立即监听数据
 
-## search-优化组件中请求api的参数取值
+## search-页数据的列表渲染
+1. 通过props父子传值把trademarkList、attrsList传入SearchSelector组件中
+2. 
