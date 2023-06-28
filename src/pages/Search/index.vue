@@ -19,8 +19,11 @@
         </div>
 
         <!--selector-->
-        <SearchSelector :trademarkList="trademarkList"
-        :attrsList="attrsList"/>
+        <SearchSelector
+          :trademarkList="trademarkList"
+          :attrsList="attrsList"
+          @changeTradeMark="changeTradeMark"
+        />
 
         <!--details-->
         <div class="details clearfix">
@@ -495,8 +498,11 @@ export default {
       this.attrsList = result.attrsList;
       this.goodsList = result.goodsList;
       this.trademarkList = result.trademarkList;
-      console.log('this.attrsList',this.attrsList);
-  
+      console.log("this.attrsList", this.attrsList);
+    },
+
+    changeTradeMark(value) {
+      this.searchParams.trademark = value;
     },
   },
   watch: {
@@ -853,4 +859,3 @@ export default {
   }
 }
 </style>
-

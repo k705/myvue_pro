@@ -337,4 +337,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
 
 ## search-页数据的列表渲染
 1. 通过props父子传值把trademarkList、attrsList传入SearchSelector组件中
-2. 
+
+
