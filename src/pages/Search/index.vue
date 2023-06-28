@@ -495,8 +495,8 @@ export default {
       this.attrsList = result.attrsList;
       this.goodsList = result.goodsList;
       this.trademarkList = result.trademarkList;
-      console.log('trademarkList',trademarkList);
-      console.log('attrsList',attrsList);
+      console.log('this.attrsList',this.attrsList);
+  
     },
   },
   watch: {
