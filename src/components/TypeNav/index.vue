@@ -4,7 +4,7 @@
     <div class="container" @mouseenter="mouseIsInNav=true" @mouseleave="mouseIsInNav=false">
       <div>
         <h2 class="all">全部商品分类</h2>
-        <div class="sort" @click="categoryIsShow">
+        <div class="sort" v-show="categoryIsShow">
         <div
           class="all-sort-list2"
           @mouseenter="mouseIsInCategory = true"

@@ -283,7 +283,15 @@ router.afterEach((to, from, next) => { NProgress.done() })
 12. List中banner的获取及渲染
 
 13. floor组件的mock数据获取及数据渲染
+   
 
 14. swiper的引入及使用
 
 15. 因为有多个Floor组件，所以在home组件中请求数据并遍历出多个Floor
+ - bug:在home组件中多引入了一个<Floor/>
+
+16. search组件中获取动态路由参数：
+    - computed直接拿到参数值
+    - props在search路由中接收数据
+    - watch监听动态路由改变（$route,
+    -注意：初始化获取不到props的值，所以在watch中，把新得到的在props中保存的动态路由参数 交给 初始化的 searchParams 数据

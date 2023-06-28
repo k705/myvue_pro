@@ -45,8 +45,7 @@
               <img src="./images/floor-1-1.png" />
             </div>
             <div class="floorBanner">
-                          <Swiper :list="floor.carouselList" />
-
+              <Swiper :list="floor.carouselList" />
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
@@ -79,7 +78,7 @@
 <script>
 export default {
   name: "Floor",
-  props:["floor"]
+  props: ["floor"],
 };
 </script>
 
