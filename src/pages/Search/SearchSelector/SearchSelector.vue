@@ -27,7 +27,7 @@
           <li
             v-for="attrValue in attr.attrValueList"
             :key="attrValue"
-            @click="$emit('changeAttr',`${attr.attrId}:${attrValue}:${attr.attrName}`)"
+            
           >
             <a>{{ attrValue }}</a>
           </li>

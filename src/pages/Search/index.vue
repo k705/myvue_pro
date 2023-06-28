@@ -19,7 +19,8 @@
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector :attrsList="attrsList"
+        :trademarkList="trademarkList"/>
 
         <!--details-->
         <div class="details clearfix">

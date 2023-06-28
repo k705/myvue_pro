@@ -295,3 +295,6 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - props在search路由中接收数据
     - watch监听动态路由改变（$route,
     -注意：初始化获取不到props的值，所以在watch中，把新得到的在props中保存的动态路由参数 交给 初始化的 searchParams 数据
+
+17. search-页数据的列表渲染
+    - 通过props把数据传给searchSelector组件，并在对应的位置遍历数据
