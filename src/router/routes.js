@@ -1,7 +1,9 @@
 const Home = ()=>import("@/pages/Home")
 const Login = ()=>import("@/pages/Login")
 const Register = ()=>import("@/pages/Register")
-const Search = ()=>import("@/pages/Search")
+const Search = () => import("@/pages/Search")
+const Detail = ()=>import("@/pages/Detail")
+
 const NotFound = () => import("@/pages/404")
 
 export default [
@@ -33,6 +35,11 @@ export default [
         path: "/search:keyword?",
         name: "Search",
         component:Search
+    },
+    {
+        path: "/detail",
+        name: "Detail",
+        component:Detail
     },{
         path: "/*",
         name: "NotFound",
