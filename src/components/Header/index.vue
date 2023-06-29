@@ -60,6 +60,11 @@ export default {
       keyword:""
     };
   },
+  mounted(){
+    this.$bus.$on("clearKeyword",()=>{
+      this.keyword = ""
+    })
+  },
   methods: {
     toSearch() {
       //点击搜索的时候先获取当前路由的query参数

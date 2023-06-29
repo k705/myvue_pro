@@ -15,6 +15,10 @@
               品牌：{{ searchParams.trademark.split(":")[1]
               }}<i @click="searchParams.trademark = ''">×</i>
             </li>
+            <li class="with-x" v-if="searchParams.keyword">
+              搜索：{{ searchParams.keyword
+              }}<i @click="clearKeyword">×</i>
+            </li>
           </ul>
         </div>
 
@@ -151,6 +155,7 @@ export default {
     this.getSearchInfo();
   },
   methods: {
+    // 1.获取searchParams数据列表
     async getSearchInfo() {
       const result = await reqSearchInfo(this.searchParams);
       this.attrsList = result.attrsList;
@@ -158,10 +163,20 @@ export default {
       this.trademarkList = result.trademarkList;
       console.log("this.attrsList", this.attrsList);
     },
-
+    // 2.点击品牌改变searchParams，重新发送请求
     changeTradeMark(value) {
       this.searchParams.trademark = value;
     },
+    // 3.清空路由及搜索框
+    clearKeyword(){
+      // 重新跳转路由，不带keyword（搜索框数据），只带query，从而清空路由中keyword参数
+      this.$router.push({
+        name:"Search",
+        query:this.$route.query
+      })
+      // 清空搜索框,使用$bus事件总线通知兄弟组件Header
+      this.$bus.$emit("clearKeyword")
+    }
   },
   watch: {
     // 1.监听路由

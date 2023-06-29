@@ -320,9 +320,9 @@ router.afterEach((to, from, next) => { NProgress.done() })
 1. `npm i swiper@5`
 2. 封装swiper公共组件
 3. 在入口文件main中引入swiper的css
-4. 在需要的组件的轮播图中插入Swiper组件
+4. 在需要的组件的轮播图中插入Swiper组件，并传入数据
 
-## 在组件中拿到动态路由参数
+## 在search组件中拿到动态路由参数
 1. 动态路由中监听动态路由参数的改变和获取动态路由参数的三个方法：
     - watch：监听动态路由改变，之后做一些逻辑
     - computed：监听动态路由改变+得到值
@@ -335,20 +335,27 @@ router.afterEach((to, from, next) => { NProgress.done() })
     销售属性列表：goodsList 
 4. 初始化获取不到props值，所以在watch中立即监听路由（初始化数据）
 
-## search-页数据的列表渲染
-1. 通过props父子传值把trademarkList、attrsList传入SearchSelector组件中
-2. bug:TypeNav组件中的categoryId写成了categoryid
+## search-页
+1. 平台属性-品牌、属性的请求数据及展示
+    - 在data中配置请求回来的数据，初始化
+    - 在methods中通过getSearchInfo函数获取请求的search页数据
+    - 在watch中监听路由变化，把query和params中的数据解构出来并交给初始化的searchParams数据
+    - 通过props父子传值(`:trademarkList="trademarkList"`)把trademarkList、attrsList传入SearchSelector组件中
+    - 通过自定义事件将数据子传父，在子组件中通过`@click="$emit('changeTradeMark', ${trademark.tmId}:${trademark.tmName})"`把参数传给父组件
+    - 父组件中拿到点击的trademark参数后传给searchParams的trademark，watch监听到searchParams的改变，则重新发送请求，在子组件中把请求的数据渲染到页面上
+    - 在watch中深度监听searchParams，一改变则重新请求搜索页数据
+    - bug:
+        - TypeNav组件中的`categoryId`写成了`categoryid`
+        - search组件和其子组件传值的时候`changeTradeMark`写成了`changeTrademark`
+        - 最好复制！！！
 
-
-## search-点击修改品牌并发送请求
-1. 子传父  自定义事件 通过changeTradeMark事件，把点击的trademarkId和trademarkName传给searchParams，watch监听到searchParams的改变，则重新发送请求，在子组件中把请求的数据渲染到页面上
-2. 在watch中深度监听searchParams，一改变则重新请求搜索页数据
-
-
-## search-品牌搜索的标识和删除
-
-## search-搜索标识和删除标识
-
+2. 搜索标识和删除标识
+    - 重新写一个li标签，用searchParams的keyword(即搜索框数据)渲染
+    - 点击x，封装函数重新跳转路由，不带keyword（搜索框数据），只带query，从而清空路由中keyword参数
+    - 兄弟之间利用$bus通信，清空搜索框数据
+        - 在main入口文件beforeCreate阶段中注入$bus `beforeCreate(){Vue.prototype.$bus = this},`
+        - Header组件绑事件(接收数据)`this.$bus.$on("clearKeyword",()=>{}`
+        - Search组件调事件`this.$bus.$emit("clearKeyword")`
 ## search-平台属性的标识展示和删除
 
 ## search-排序的iconfont图标
