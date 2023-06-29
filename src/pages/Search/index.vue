@@ -18,6 +18,9 @@
             <li class="with-x" v-if="searchParams.keyword">
               搜索：{{ searchParams.keyword }}<i @click="clearKeyword">×</i>
             </li>
+             <li class="with-x" v-for="(item,index) in searchParams.props" :key="item">
+              平台属性：{{ item.split(":")[1]}}--{{ item.split(":")[2]}}<i @click="clearAttr(index)">×</i>
+            </li>
           </ul>
         </div>
 
@@ -26,6 +29,7 @@
           :trademarkList="trademarkList"
           :attrsList="attrsList"
           @changeTradeMark="changeTradeMark"
+          @changeAttr="changeAttr"
         />
 
         <!--details-->
@@ -176,6 +180,14 @@ export default {
       // 兄弟组件通信 $bus  清除搜索框内容
       this.$bus.$emit("clearKeyword");
     },
+    changeAttr(value){
+      if(this.searchParams.props.includes(value)) return;
+      this.searchParams.props.push(value)
+    },
+    clearAttr(index){
+      this.searchParams.props.splice(index,1)
+    }
+
   },
   watch: {
     $route: {
