@@ -114,33 +114,12 @@
             </ul>
           </div>
           <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
+            <Pagination
+              :pageNo.sync="searchParams.pageNo"
+              :total="total"
+              :totalPages="totalPages"
+              :continuePage="5"
+            />
           </div>
         </div>
       </div>
@@ -167,10 +146,14 @@ export default {
         props: [],
         trademark: "",
         order: "1:asc",
+        pageNo: 1,
+        pageSize: 10,
       },
       attrsList: [],
       goodsList: [],
       trademarkList: [],
+      total: 0,
+      totalPages: 0,
     };
   },
   mounted() {
@@ -183,6 +166,8 @@ export default {
       this.attrsList = result.attrsList;
       this.goodsList = result.goodsList;
       this.trademarkList = result.trademarkList;
+      this.total = result.total;
+      this.totalPages = result.totalPages;
     },
     // 2.点击品牌改变搜索参数
     changeTradeMark(value) {
