@@ -16,11 +16,14 @@
               }}<i @click="searchParams.trademark = ''">×</i>
             </li>
             <li class="with-x" v-if="searchParams.keyword">
-              搜索：{{ searchParams.keyword
-              }}<i @click="clearKeyword">×</i>
+              搜索：{{ searchParams.keyword }}<i @click="clearKeyword">×</i>
             </li>
-             <li class="with-x" v-for="(item,index) in searchParams.props" :key='item'>
-              平台属性：{{ item.split(":")[1]}}--{{item.split(":")[2]
+            <li
+              class="with-x"
+              v-for="(item, index) in searchParams.props"
+              :key="item"
+            >
+              平台属性：{{ item.split(":")[1] }}--{{ item.split(":")[2]
               }}<i @click="clearAttr(index)">×</i>
             </li>
           </ul>
@@ -39,23 +42,22 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li
+                  :class="{ active: searchParams.order.split(':')[0] === '1' }"
+                  @click="order('1')"
+                >
+                  <a
+                    >综合
+                    <span class="iconfont" :class="searchParams.order.split(':')[1]==='asc'?'icon-up': 'icon-down'"
+                    v-show="searchParams.order.split(':')[0]==='1'"></span>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li
+                  :class="{ active: searchParams.order.split(':')[0] === '2' }"
+                  @click="order('2')"
+                >
+                  <a href="#">价格 <span class="iconfont " :class="searchParams.order.split(':')[1]==='asc'?'icon-up': 'icon-down'"
+                    v-show="searchParams.order.split(':')[0]==='2'"></span></a>
                 </li>
               </ul>
             </div>
@@ -166,37 +168,49 @@ export default {
       this.attrsList = result.attrsList;
       this.goodsList = result.goodsList;
       this.trademarkList = result.trademarkList;
-      
     },
     // 2.点击品牌改变searchParams，重新发送请求
     changeTradeMark(value) {
       this.searchParams.trademark = value;
     },
     // 3.清空路由及搜索框
-    clearKeyword(){
+    clearKeyword() {
       // 重新跳转路由，不带keyword（搜索框数据），只带query，从而清空路由中keyword参数
       this.$router.push({
-        name:"Search",
-        query:this.$route.query
-      })
+        name: "Search",
+        query: this.$route.query,
+      });
       // 清空搜索框,使用$bus事件总线通知兄弟组件Header
-      this.$bus.$emit("clearKeyword")
+      this.$bus.$emit("clearKeyword");
     },
     // 4.点击平台属性改变searchParams
-    changeAttr(value){
+    changeAttr(value) {
       // 如果已经存在平台属性则不再执行
-      if(this.searchParams.props.includes(value)) return 
+      if (this.searchParams.props.includes(value)) return;
 
-      // 
-      this.searchParams.props.push(value)
+      //
+      this.searchParams.props.push(value);
       console.log("this.searchParams.props", this.searchParams.props);
       console.log("value", value);
-     
-
     },
-    clearAttr(index){
-      this.searchParams.props.splice(index,1); console.log("index", index);
-    }
+    clearAttr(index) {
+      this.searchParams.props.splice(index, 1);
+      console.log("index", index);
+    },
+    // 排序(不会)
+     order(nowType) {
+      const [lastType, lastOrder] = this.searchParams.order.split(":");
+
+      //如果旧的type和新的type一致,则直接对排序取反即可
+      //如果不一致,则选中新的type 并默认降序
+      if (nowType === lastType) {
+        this.searchParams.order = `${nowType}:${
+          lastOrder === "desc" ? "asc" : "desc"
+        }`;
+      } else {
+        this.searchParams.order = `${nowType}:desc`;
+      }
+    },
   },
   watch: {
     // 1.监听路由

@@ -362,8 +362,11 @@ router.afterEach((to, from, next) => { NProgress.done() })
 3. 点击x调用删除searchParams.props中从下标开始删除一个
 4. searchParams.props是一个数组，存放所有点击的平台属性`['23:8G:运行内存', '24:256G:机身内存', '107:1200mAh以下:电池容量', __ob__: Observer]`
 ## search-排序的iconfont图标
-
+1. 注册iconfont账号，点击生成代码
+2. 在public index中引入
+3. 在标签上添加类名使用
 ## search-排序按钮的动态样式
-
+1. bug:双引号里面写双引号
 ## search-排序按钮的逻辑
+不会！！！
 
