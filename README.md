@@ -357,7 +357,10 @@ router.afterEach((to, from, next) => { NProgress.done() })
         - Header组件绑事件(接收数据)`this.$bus.$on("clearKeyword",()=>{}`
         - Search组件调事件`this.$bus.$emit("clearKeyword")`
 ## search-平台属性的标识展示和删除
-
+1. search中定义函数，点击平台属性添加到searchParams中，并通过自定义事件传到子组件中
+2. 新建li标签，遍历 添加到searchParams中的点击的属性名和属性值 并渲染页面
+3. 点击x调用删除searchParams.props中从下标开始删除一个
+4. searchParams.props是一个数组，存放所有点击的平台属性`['23:8G:运行内存', '24:256G:机身内存', '107:1200mAh以下:电池容量', __ob__: Observer]`
 ## search-排序的iconfont图标
 
 ## search-排序按钮的动态样式

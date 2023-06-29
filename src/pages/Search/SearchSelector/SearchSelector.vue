@@ -24,7 +24,7 @@
       <div class="fl key">{{ attr.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="attrValue in attr.attrValueList" :key="attrValue">
+          <li v-for="attrValue in attr.attrValueList" :key="attrValue" @click="$emit('changeAttr',`${attr.attrId}:${attrValue}:${attr.attrName}`)">
             <a>{{ attrValue }}</a>
           </li>
         </ul>

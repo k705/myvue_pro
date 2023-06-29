@@ -19,6 +19,10 @@
               搜索：{{ searchParams.keyword
               }}<i @click="clearKeyword">×</i>
             </li>
+             <li class="with-x" v-for="(item,index) in searchParams.props" :key='item'>
+              平台属性：{{ item.split(":")[1]}}--{{item.split(":")[2]
+              }}<i @click="clearAttr(index)">×</i>
+            </li>
           </ul>
         </div>
 
@@ -27,6 +31,7 @@
           :trademarkList="trademarkList"
           :attrsList="attrsList"
           @changeTradeMark="changeTradeMark"
+          @changeAttr="changeAttr"
         />
 
         <!--details-->
@@ -161,7 +166,7 @@ export default {
       this.attrsList = result.attrsList;
       this.goodsList = result.goodsList;
       this.trademarkList = result.trademarkList;
-      console.log("this.attrsList", this.attrsList);
+      
     },
     // 2.点击品牌改变searchParams，重新发送请求
     changeTradeMark(value) {
@@ -176,6 +181,21 @@ export default {
       })
       // 清空搜索框,使用$bus事件总线通知兄弟组件Header
       this.$bus.$emit("clearKeyword")
+    },
+    // 4.点击平台属性改变searchParams
+    changeAttr(value){
+      // 如果已经存在平台属性则不再执行
+      if(this.searchParams.props.includes(value)) return 
+
+      // 
+      this.searchParams.props.push(value)
+      console.log("this.searchParams.props", this.searchParams.props);
+      console.log("value", value);
+     
+
+    },
+    clearAttr(index){
+      this.searchParams.props.splice(index,1); console.log("index", index);
     }
   },
   watch: {
