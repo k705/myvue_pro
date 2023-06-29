@@ -31,5 +31,5 @@ router.beforeEach((to, from, next) => {
   next();
 })
 // 全局前置守卫afterEach
-router.afterEach((to, from, next) => { NProgress.done() })
+router.afterEach(() => { NProgress.done() })
 export default router 

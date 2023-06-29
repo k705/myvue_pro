@@ -7,7 +7,9 @@
           <li
             v-for="trademark in trademarkList"
             :key="trademark.tmId"
-            @click="$emit('changeTrademark',`${trademark.tmId}:${trademark.tmName}`)"
+            @click="
+              $emit('changeTradeMark', `${trademark.tmId}:${trademark.tmName}`)
+            "
           >
             {{ trademark.tmName }}
           </li>
@@ -22,11 +24,7 @@
       <div class="fl key">{{ attr.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li
-            v-for="attrValue in attr.attrValueList"
-            :key="attrValue"
-            
-          >
+          <li v-for="attrValue in attr.attrValueList" :key="attrValue">
             <a>{{ attrValue }}</a>
           </li>
         </ul>

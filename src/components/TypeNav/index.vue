@@ -2,7 +2,7 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div @mouseenter="mouseIsInNav=true"  @mouseleave="mouseIsInNav=false">
+      <div @mouseenter="mouseIsInNav = true" @mouseleave="mouseIsInNav = false">
         <h2 class="all">全部商品分类</h2>
         <div class="sort" v-show="categoryIsShow">
           <div
@@ -92,7 +92,7 @@ export default {
       // 3.保存鼠标是否在三级分类区域
       mouseIsInCategory: false,
       //4.保存鼠标是否在整个大的三级分类的区域,用来控制三级列表的条件渲染
-      mouseIsInNav:false
+      mouseIsInNav: false,
     };
   },
   mounted() {
@@ -104,7 +104,6 @@ export default {
       //trailing配置项让函数在节流结束后执行最后一次
       trailing: true,
     });
-   
   },
   methods: {
     async getCategory1List() {
@@ -160,24 +159,24 @@ export default {
       this.$router.push({
         name: "Search",
         query: {
-          category1id: category1id,
+          category1Id: category1id,
           category2Id: category2id,
           category3Id: category3id,
           categoryName: categoryname,
         },
         params,
       });
-       this.mouseIsInNav = false
+      this.mouseIsInNav = false;
     },
   },
-  computed:{
-    categoryIsShow(){
+  computed: {
+    categoryIsShow() {
       // 如果在home页则一直展示
-      if(this.$route.name === "Home") return true
+      if (this.$route.name === "Home") return true;
       // 如果不在home页，则看鼠标是否在三级分类区域
-        return this.mouseIsInNav 
-    }
-  }
+      return this.mouseIsInNav;
+    },
+  },
 };
 </script>
 

@@ -333,9 +333,27 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 函数：把函数return的对象中的属性作为props传给组件，接收当前的$route作为参数
 3. 平台属性列表：attrsList
     销售属性列表：goodsList 
-4. 初始化获取不到props值，所以在watch中立即监听数据
+4. 初始化获取不到props值，所以在watch中立即监听路由（初始化数据）
 
 ## search-页数据的列表渲染
 1. 通过props父子传值把trademarkList、attrsList传入SearchSelector组件中
+2. bug:TypeNav组件中的categoryId写成了categoryid
 
+
+## search-点击修改品牌并发送请求
+1. 子传父  自定义事件 通过changeTradeMark事件，把点击的trademarkId和trademarkName传给searchParams，watch监听到searchParams的改变，则重新发送请求，在子组件中把请求的数据渲染到页面上
+2. 在watch中深度监听searchParams，一改变则重新请求搜索页数据
+
+
+## search-品牌搜索的标识和删除
+
+## search-搜索标识和删除标识
+
+## search-平台属性的标识展示和删除
+
+## search-排序的iconfont图标
+
+## search-排序按钮的动态样式
+
+## search-排序按钮的逻辑
 
