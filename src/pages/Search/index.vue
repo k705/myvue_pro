@@ -36,24 +36,40 @@
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
-              <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+               <ul class="sui-nav">
+                <li
+                  :class="{ active: searchParams.order.split(':')[0] === '1' }"
+                  @click="order('1')"
+                >
+                  <a
+                    >综合
+                    <span
+                      class="iconfont"
+                      :class="
+                        searchParams.order.split(':')[1] === 'asc'
+                          ? 'icon-up'
+                          : 'icon-down'
+                      "
+                      v-show="searchParams.order.split(':')[0] === '1'"
+                    ></span>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li
+                  :class="{ active: searchParams.order.split(':')[0] === '2' }"
+                  @click="order('2')"
+                >
+                  <a
+                    >价格
+                    <span
+                      class="iconfont"
+                      :class="
+                        searchParams.order.split(':')[1] === 'asc'
+                          ? 'icon-up'
+                          : 'icon-down'
+                      "
+                      v-show="searchParams.order.split(':')[0] === '2'"
+                    ></span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -186,7 +202,21 @@ export default {
     },
     clearAttr(index){
       this.searchParams.props.splice(index,1)
-    }
+    },
+    //6. 按钮排序逻辑
+    order(nowType) {
+      const [lastType, lastOrder] = this.searchParams.order.split(":");
+
+      //如果旧的type和新的type一致,则直接对排序取反即可
+      //如果不一致,则选中新的type 并默认降序
+      if (nowType === lastType) {
+        this.searchParams.order = `${nowType}:${
+          lastOrder === "desc" ? "asc" : "desc"
+        }`;
+      } else {
+        this.searchParams.order = `${nowType}:desc`;
+      }
+    },
 
   },
   watch: {
