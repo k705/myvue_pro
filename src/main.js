@@ -7,7 +7,8 @@ import Pagination from "@/components/Pagination"
 import "swiper/css/swiper.min.css";
 
 import "@/mock";
-
+import store from "@/store";
+Vue.config.productionTip = false;
 
 // 全局注册公共组件
 Vue.component("TypeNav",TypeNav)
@@ -20,5 +21,6 @@ new Vue({
   beforeCreate() {
     Vue.prototype.$bus = this
   },
-  router
+  router,
+  store
 }).$mount('#app')
