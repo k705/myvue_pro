@@ -11,15 +11,23 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x" v-if="searchParams.trademark">品牌：{{searchParams.trademark.split(":")[1]}}<i @click="searchParams.trademark=''">×</i></li>
-           
+            <li class="with-x" v-if="searchParams.trademark">
+              品牌：{{ searchParams.trademark.split(":")[1]
+              }}<i @click="searchParams.trademark = ''">×</i>
+            </li>
+            <li class="with-x" v-if="searchParams.keyword">
+              搜索：{{ searchParams.keyword
+              }}<i @click="clearKeyword">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector :attrsList="attrsList"
-        :trademarkList="trademarkList"
-        @changeTradeMark="changeTradeMark"/>
+        <SearchSelector
+          :attrsList="attrsList"
+          :trademarkList="trademarkList"
+          @changeTradeMark="changeTradeMark"
+        />
 
         <!--details-->
         <div class="details clearfix">
@@ -52,21 +60,16 @@
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a 
-                      ><img :src="good.defaultImg"
-                    /></a>
+                    <a><img :src="good.defaultImg" /></a>
                   </div>
                   <div class="price">
                     <strong>
                       <em>¥</em>
-                      <i>{{good.price}}</i>
+                      <i>{{ good.price }}</i>
                     </strong>
                   </div>
                   <div class="attr">
-                    <a 
-                      
-                      >{{good.title}}</a
-                    >
+                    <a>{{ good.title }}</a>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
@@ -84,7 +87,6 @@
                   </div>
                 </div>
               </li>
-             
             </ul>
           </div>
           <div class="fr page">
@@ -150,16 +152,28 @@ export default {
     this.getSearchInfo();
   },
   methods: {
+    // 1.获取搜索列表数据
     async getSearchInfo() {
       const result = await reqSearchInfo(this.searchParams);
       this.attrsList = result.attrsList;
       this.goodsList = result.goodsList;
       this.trademarkList = result.trademarkList;
     },
-    changeTradeMark(value){
-      this.searchParams.trademark = value
-    }
+    // 2.点击品牌改变搜索参数
+    changeTradeMark(value) {
+      this.searchParams.trademark = value;
+    },
+    // 3.清空路由参数及搜索框内容
+    clearKeyword() {
+      this.$router.push({
+        name: "Search",
+        query: this.$route.query,
+      });
+
+      this.$bus.$emit("clearKeyword");
+    },
   },
+
   /*
     初期我们使用的是props拿动态路由参数,但是后期在初始化获取props的值可能有问题,所以我们可以选择一下其他的方式
   */
@@ -188,12 +202,12 @@ export default {
         };
       },
     },
-    searchParams:{
-      deep:"true",
-      handler(){
-        this.getSearchInfo()
-      }
-    }
+    searchParams: {
+      deep: "true",
+      handler() {
+        this.getSearchInfo();
+      },
+    },
   },
 };
 </script>
@@ -530,4 +544,3 @@ export default {
   }
 }
 </style>
-

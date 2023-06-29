@@ -13,5 +13,8 @@ Vue.component("TypeNav",TypeNav)
 Vue.component("Swiper",Swiper)
 new Vue({
   render: h => h(App),
+  beforeCreate(){
+    Vue.prototype.$bus=this
+  },
   router
 }).$mount('#app')
