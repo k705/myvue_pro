@@ -8,7 +8,7 @@
             v-for="trademark in trademarkList"
             :key="trademark.tmId"
             @click="
-              $emit('changeTrademark', `${trademark.tmId}:${trademark.tmName}`)
+              $emit('changeTradeMark', `${trademark.tmId}:${trademark.tmName}`)
             "
           >
             {{ trademark.tmName }}
