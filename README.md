@@ -370,3 +370,11 @@ router.afterEach((to, from, next) => { NProgress.done() })
 ## search-排序按钮的逻辑
 不会！！！
 
+## pagination
+重写！！！
+
+## Detail
+1. 引入静态文件
+2. 路由中注册
+3. search页中点击图片声明式路由导航到详情页
+

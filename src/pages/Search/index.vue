@@ -48,16 +48,33 @@
                 >
                   <a
                     >综合
-                    <span class="iconfont" :class="searchParams.order.split(':')[1]==='asc'?'icon-up': 'icon-down'"
-                    v-show="searchParams.order.split(':')[0]==='1'"></span>
+                    <span
+                      class="iconfont"
+                      :class="
+                        searchParams.order.split(':')[1] === 'asc'
+                          ? 'icon-up'
+                          : 'icon-down'
+                      "
+                      v-show="searchParams.order.split(':')[0] === '1'"
+                    ></span>
                   </a>
                 </li>
                 <li
                   :class="{ active: searchParams.order.split(':')[0] === '2' }"
                   @click="order('2')"
                 >
-                  <a href="#">价格 <span class="iconfont " :class="searchParams.order.split(':')[1]==='asc'?'icon-up': 'icon-down'"
-                    v-show="searchParams.order.split(':')[0]==='2'"></span></a>
+                  <a href="#"
+                    >价格
+                    <span
+                      class="iconfont"
+                      :class="
+                        searchParams.order.split(':')[1] === 'asc'
+                          ? 'icon-up'
+                          : 'icon-down'
+                      "
+                      v-show="searchParams.order.split(':')[0] === '2'"
+                    ></span
+                  ></a>
                 </li>
               </ul>
             </div>
@@ -67,7 +84,10 @@
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a><img :src="good.defaultImg" /></a>
+                    <router-link
+                      :to="{ name: 'Detail', params: { skuId: good.id } }"
+                      ><img :src="good.defaultImg"
+                    /></router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -96,7 +116,7 @@
               </li>
             </ul>
           </div>
-           <div class="fr page">
+          <div class="fr page">
             <Pagination
               :pageNo.sync="searchParams.pageNo"
               :total="total"
@@ -135,7 +155,7 @@ export default {
       attrsList: [],
       goodsList: [],
       trademarkList: [],
-       total: 0,
+      total: 0,
       totalPages: 0,
     };
   },
@@ -181,7 +201,7 @@ export default {
       console.log("index", index);
     },
     // 排序(不会)
-     order(nowType) {
+    order(nowType) {
       const [lastType, lastOrder] = this.searchParams.order.split(":");
 
       //如果旧的type和新的type一致,则直接对排序取反即可

@@ -2,6 +2,7 @@ const Home = ()=>import("@/pages/Home")
 const Login = () => import("@/pages/Login")
 const Register = () => import("@/pages/Register")
 const Search = () => import("@/pages/Search")
+const Detail = () => import("@/pages/Detail")
 const NotFound = () => import("@/pages/404")
 
 export default [
@@ -35,12 +36,17 @@ export default [
         path: "/search/:keyword?",
         name: "Search",
         component:Search,
-        props($route) {
+       /*  props($route) {
             return {
                 ...$route.params,
                 ...$route.query
             }
-        }
+        } */
+    },
+    {
+        path: "/detail",
+        name: "Detail",
+        component:Detail
     },
     {
         path: "*",
