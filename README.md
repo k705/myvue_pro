@@ -298,3 +298,9 @@ router.afterEach((to, from, next) => { NProgress.done() })
 
 17. search-页数据的列表渲染
     - 通过props把数据传给searchSelector组件，并在对应的位置遍历数据
+
+18. search-排序按钮的逻辑
+    - bug：data中没写order
+    - 使用动态类控制active样式
+    - 使用order为1/2来切换综合和价格的展示
+    - 使用asc和des来切换`'icon-up''icon-down'`

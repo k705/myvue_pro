@@ -18,8 +18,13 @@
             <li class="with-x" v-if="searchParams.keyword">
               搜索：{{ searchParams.keyword }}<i @click="clearKeyword">×</i>
             </li>
-             <li class="with-x" v-for="(item,index)  in searchParams.props" :key="item">
-              平台属性：{{ item.split(":")[1] }}--{{item.split(":")[2]}}<i @click="clearAttr(index)">×</i>
+            <li
+              class="with-x"
+              v-for="(item, index) in searchParams.props"
+              :key="item"
+            >
+              平台属性：{{ item.split(":")[1] }}--{{ item.split(":")[2]
+              }}<i @click="clearAttr(index)">×</i>
             </li>
           </ul>
         </div>
@@ -37,23 +42,39 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li
+                  :class="{ active: searchParams.order.split(':')[0] === '1' }"
+                  @click="order('1')"
+                >
+                  <a
+                    >综合
+                    <span
+                      class="iconfont"
+                      :class="
+                        searchParams.order.split(':')[1] === 'asc'
+                          ? 'icon-up'
+                          : 'icon-down'
+                      "
+                      v-show="searchParams.order.split(':')[0] === '1'"
+                    ></span>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li
+                  :class="{ active: searchParams.order.split(':')[0] === '2' }"
+                  @click="order('2')"
+                >
+                  <a
+                    >价格
+                    <span
+                      class="iconfont"
+                      :class="
+                        searchParams.order.split(':')[1] === 'asc'
+                          ? 'icon-up'
+                          : 'icon-down'
+                      "
+                      v-show="searchParams.order.split(':')[0] === '2'"
+                    ></span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -145,6 +166,7 @@ export default {
         keyword: "",
         props: [],
         trademark: "",
+        order: "1:asc",
       },
       attrsList: [],
       goodsList: [],
@@ -178,13 +200,27 @@ export default {
     // 4.点击平台属性
     changeAttr(value) {
       if (this.searchParams.props.includes(value)) return;
-      this.searchParams.props.push(value)
+      this.searchParams.props.push(value);
     },
     // 5.点击x删除searchParams.props数组中当前下标的属性
-   clearAttr(index){
-     this.searchParams.props.splice(index,1)
-   } 
+    clearAttr(index) {
+      this.searchParams.props.splice(index, 1);
     },
+    //  6.排序
+    order(nowType) {
+      const [lastType, lastOrder] = this.searchParams.order.split(":");
+
+      //如果旧的type和新的type一致,则直接对排序取反即可
+      //如果不一致,则选中新的type 并默认降序
+      if (nowType === lastType) {
+        this.searchParams.order = `${nowType}:${
+          lastOrder === "desc" ? "asc" : "desc"
+        }`;
+      } else {
+        this.searchParams.order = `${nowType}:desc`;
+      }
+    },
+  },
 
   /*
     初期我们使用的是props拿动态路由参数,但是后期在初始化获取props的值可能有问题,所以我们可以选择一下其他的方式
