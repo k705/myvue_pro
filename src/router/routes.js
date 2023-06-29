@@ -36,7 +36,7 @@ export default [
         name: "Search",
         component:Search
     }, {
-        path: "/detail",
+        path: "/detail:skuId",
         name: "Detail",
         component:Detail
        
