@@ -16,8 +16,10 @@
               }}<i @click="searchParams.trademark = ''">×</i>
             </li>
             <li class="with-x" v-if="searchParams.keyword">
-              搜索：{{ searchParams.keyword
-              }}<i @click="clearKeyword">×</i>
+              搜索：{{ searchParams.keyword }}<i @click="clearKeyword">×</i>
+            </li>
+             <li class="with-x" v-for="(item,index)  in searchParams.props" :key="item">
+              平台属性：{{ item.split(":")[1] }}--{{item.split(":")[2]}}<i @click="clearAttr(index)">×</i>
             </li>
           </ul>
         </div>
@@ -27,6 +29,7 @@
           :attrsList="attrsList"
           :trademarkList="trademarkList"
           @changeTradeMark="changeTradeMark"
+          @changeAttr="changeAttr"
         />
 
         <!--details-->
@@ -172,7 +175,16 @@ export default {
 
       this.$bus.$emit("clearKeyword");
     },
-  },
+    // 4.点击平台属性
+    changeAttr(value) {
+      if (this.searchParams.props.includes(value)) return;
+      this.searchParams.props.push(value)
+    },
+    // 5.点击x删除searchParams.props数组中当前下标的属性
+   clearAttr(index){
+     this.searchParams.props.splice(index,1)
+   } 
+    },
 
   /*
     初期我们使用的是props拿动态路由参数,但是后期在初始化获取props的值可能有问题,所以我们可以选择一下其他的方式
