@@ -11,15 +11,22 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x" v-if="searchParams.trademark">品牌：{{searchParams.trademark.split(":")[1]}}<i @click="searchParams.trademark=''">×</i></li>
-            <li class="with-x" v-if="searchParams.keyword">搜索：{{searchParams.keyword}}<i @click="clearKeyword">×</i></li>
+            <li class="with-x" v-if="searchParams.trademark">
+              品牌：{{ searchParams.trademark.split(":")[1]
+              }}<i @click="searchParams.trademark = ''">×</i>
+            </li>
+            <li class="with-x" v-if="searchParams.keyword">
+              搜索：{{ searchParams.keyword }}<i @click="clearKeyword">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector :trademarkList="trademarkList"
-        :attrsList="attrsList"
-        @changeTradeMark="changeTradeMark"/>
+        <SearchSelector
+          :trademarkList="trademarkList"
+          :attrsList="attrsList"
+          @changeTradeMark="changeTradeMark"
+        />
 
         <!--details-->
         <div class="details clearfix">
@@ -52,21 +59,16 @@
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a 
-                      ><img :src="good.defaultImg"
-                    /></a>
+                    <a><img :src="good.defaultImg" /></a>
                   </div>
                   <div class="price">
                     <strong>
                       <em>¥</em>
-                      <i>{{good.price}}</i>
+                      <i>{{ good.price }}</i>
                     </strong>
                   </div>
                   <div class="attr">
-                    <a
-                      
-                      >{{good.title}}</a
-                    >
+                    <a>{{ good.title }}</a>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
@@ -84,7 +86,6 @@
                   </div>
                 </div>
               </li>
-              
             </ul>
           </div>
           <div class="fr page">
@@ -162,19 +163,19 @@ export default {
       this.trademarkList = result.trademarkList;
     },
     // 方法2：点击品牌改变搜索参数
-    changeTradeMark(value){
-      this.searchParams.trademark = value
+    changeTradeMark(value) {
+      this.searchParams.trademark = value;
     },
     // 方法3：点击x清楚路由中的keyword，并清楚搜索框
-    clearKeyword(){
+    clearKeyword() {
       // 跳转新的路由，去掉keyword
       this.$router.push({
-        name:"Search",
-        query:this.$route.query
+        name: "Search",
+        query: this.$route.query,
       });
       // 兄弟组件通信 $bus  清除搜索框内容
-      this.$bus.$emit("clearKeyword")
-    }
+      this.$bus.$emit("clearKeyword");
+    },
   },
   watch: {
     $route: {
@@ -193,12 +194,12 @@ export default {
         };
       },
     },
-    searchParams:{
-      deep:true,
-      handler(){
-        this.getSearchInfo()
-      }
-    }
+    searchParams: {
+      deep: true,
+      handler() {
+        this.getSearchInfo();
+      },
+    },
   },
 };
 </script>
@@ -535,4 +536,3 @@ export default {
   }
 }
 </style>
-
