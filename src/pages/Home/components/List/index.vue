@@ -91,7 +91,7 @@ export default {
   },
   mounted() {
     this.getBannerList();
-  },
+  }, 
   methods: {
     async getBannerList() {
       const result = await reqBannerList();

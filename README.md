@@ -1,33 +1,3 @@
-# vue-demo
-
-## Project setup
-
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
 # 项目
 
 ## vue.config 配置
@@ -267,40 +237,67 @@ router.afterEach((to, from, next) => { NProgress.done() })
         - 获取：`e.target.dataset.xxx`
         - 自定义属性值都小写
 
-7. header组件点击搜索跳转search
+## TypeNav组件
+1. header组件点击搜索跳转search
     - 编程式路由导航
     - routes中占位
     - 响应式数据
 
-8. 切换TypeNav为公共组件
+2. 切换TypeNav为公共组件
 
-9. TypeNav组件的条件渲染设置
+3. TypeNav组件的条件渲染设置
 
-10. 点击TypeNav后控制条件渲染
+4. 点击TypeNav后控制条件渲染
 
-11. mock拦截请求的配置
+## mock拦截请求的配置
+1. mockjs功能：
+    - 生成随机数据
+    - 拦截ajax请求
+2. 新建requestMock的axios实例，baseUrl为/，指向自己
+    - 不会走代理，不会给后端发请求(此时后端数据没写好)
+    - 后端写好后把requestMock替换成request即可
+3. mock使用
+    - 新建mock文件夹，放入json文件数据
+    - 下载mock  npm i mockjs
+    - 使用Mock拦截ajax请求
+        ```js
+        Mock.mock("/banner.list","get",{
+            code:200,
+            data:banner,//json数据
+            message:"成功",
+            ok:true,
+        })
+    - main中引入mock文件夹
+    - 解决mock数据后内部图片问题
+        - 把组件图片放到public文件夹的图片文件夹中
 
-12. List中banner的获取及渲染
+## List中banner的获取及渲染
 
-13. floor组件的mock数据获取及数据渲染
-   
+## floor组件的mock数据获取及数据渲染
+因为有多个Floor组件，所以在home组件中请求数据并遍历出多个Floor
+ - bug:在home组件中多引入了一个<Floor/>  
 
-14. swiper的引入及使用
+## swiper的引入及使用
+1. $nextTick:将nextTick回调函数延迟到数据更新并且DOM更新之后执行，在修改数据之后立即使用它，然后等待DOM更新才回执行回调函数
+2. 封装swiper公共组件
+    封装不同组件相似逻辑，把不同组件的逻辑改为一样，然后进行封装
 
-15. 因为有多个Floor组件，所以在home组件中请求数据并遍历出多个Floor
- - bug:在home组件中多引入了一个<Floor/>
-
-16. search组件中获取动态路由参数：
+## search搜索页
+1. search组件中获取动态路由参数：
     - computed直接拿到参数值
     - props在search路由中接收数据
     - watch监听动态路由改变（$route,
     -注意：初始化获取不到props的值，所以在watch中，把新得到的在props中保存的动态路由参数 交给 初始化的 searchParams 数据
 
-17. search-页数据的列表渲染
+2. search-页数据的列表渲染
     - 通过props把数据传给searchSelector组件，并在对应的位置遍历数据
 
-18. search-排序按钮的逻辑
+3. search-排序按钮的逻辑
     - bug：data中没写order
     - 使用动态类控制active样式
     - 使用order为1/2来切换综合和价格的展示
     - 使用asc和des来切换`'icon-up''icon-down'`
+
+4. search-页码组件数据控制
+
+## Detail页
