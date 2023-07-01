@@ -3,6 +3,7 @@ const Login = ()=>import("@/pages/Login")
 const Register = ()=>import("@/pages/Register")
 const Search = () => import("@/pages/Search")
 const Detail = ()=>import("@/pages/Detail")
+const AddCartSuccess = ()=>import("@/pages/AddCartSuccess")
 
 const NotFound = () => import("@/pages/404")
 
@@ -41,6 +42,10 @@ export default [
         name: "Detail",
         component:Detail
     },{
+      path: "/addCartSuccess",
+      name: "AddCartSuccess",
+      component:AddCartSuccess
+  },{
         path: "/*",
         name: "NotFound",
         component:NotFound

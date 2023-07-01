@@ -301,3 +301,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
 4. search-页码组件数据控制
 
 ## Detail页
+
+## 购物车页
