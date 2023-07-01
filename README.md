@@ -1,29 +1,3 @@
-# vue-demo
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
 # 项目
 ## vue.config配置
 1. 是否转译依赖transpileDependencies
@@ -55,34 +29,30 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## axios配置
 ## 进度条配置
 
-## 一级分类列表请求及渲染
+## 三级列表
+1. 一级分类列表请求及渲染
+2. 首页一级分类列表的动态样式
+3. 首页-二级分类的响应式添加和渲染
+4. 首页-三级分类的响应式添加和渲染
+5. 首页-三级分类节流处理
+    - 防止鼠标移入移出过快，添加节流处理
+        - 下载引入lodash插件
+        - 利用lodash的节流函数
+        ```js
+        this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
+        //leading:让事件函数在节流开始前执行
+        leading: true,
+        //trailing配置项让函数在节流结束后执行最后一次
+        trailing: true,
+        }); 
+        ```
+6. 编程式路由导航三级列表到search
 
-## 首页一级分类列表的动态样式
 
-## 首页-二级分类的响应式添加和渲染
 
-## 首页-三级分类的响应式添加和渲染
-
-## 首页-三级分类节流处理
-- 防止鼠标移入移出过快，添加节流处理
-    - 下载引入lodash插件
-    - 利用lodash的节流函数
-    ```js
-    this.category1MouseEnterThrottle = throttle(this.category1MouseEnter, 0, {
-      //leading:让事件函数在节流开始前执行
-      leading: true,
-      //trailing配置项让函数在节流结束后执行最后一次
-      trailing: true,
-    }); 
-    ```
-
-## 编程式路由导航三级列表到search
-
-## header组件点击搜索跳转search
-
-## 切换TypeNav为公共组件
-
-## TypeNav组件的条件渲染设置
+## TypeNav组件
+1. 切换TypeNav为公共组件
+2. TypeNav组件的条件渲染设置
 
 ## mock拦截请求的配置
 
@@ -90,4 +60,16 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## swiper的引入及使用
 
-## search-页数据的请求及列表渲染
+## Search组件
+1. header组件点击搜索跳转search
+2. search-页数据的请求及列表渲染
+3. search-页排序
+4. search-页码
+
+## Detail页
+1. Detail-页数据的请求及列表渲染
+2. Detail-页放大镜
+3. Detail-页轮播图
+4. Detail-页商品数量改变
+
+## ShopCart
