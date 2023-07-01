@@ -105,7 +105,7 @@
                   >-</a
                 >
               </div>
-              <div class="add">
+              <div class="add" @click="addCart">
                 <a href="javascript:" @click="addCart">加入购物车</a>
               </div>
             </div>

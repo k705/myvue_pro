@@ -303,3 +303,5 @@ router.afterEach((to, from, next) => { NProgress.done() })
 ## Detail页
 
 ## 购物车页
+1. 加入购物车成功页展示数据
+    - 在本地存储中拿到商品数据，在div中遍历数据渲染`goodData = JSON.parse(sessionStorage.getItem("goodData"));`
