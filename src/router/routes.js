@@ -5,6 +5,7 @@ const Search = ()=>import("@/pages/Search")
 const NotFound = () => import("@/pages/404")
 const Detail = ()=>import("@/pages/Detail")
 
+const AddCartSuccess = ()=>import("@/pages/AddCartSuccess")
 
 export default [
     {
@@ -40,7 +41,12 @@ export default [
         name: "Detail",
         component:Detail
        
-    },{
+    }, {
+      path: "/addCartSuccess",
+      name: "AddCartSuccess",
+      component:AddCartSuccess
+     
+  },{
         path: "/*",
         name: "NotFound",
         component:NotFound
