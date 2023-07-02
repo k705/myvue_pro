@@ -11,113 +11,56 @@
         <div class="cart-th6">操作</div>
       </div>
       <div class="cart-body">
-        <ul class="cart-list">
+        <ul class="cart-list" v-for="good in cartInfoList" :key="good.skuId">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" />
+            <input
+              type="checkbox"
+              name="chk_list"
+              :checked="good.isChecked"
+              @change="checkCart(good.skuId, good.isChecked)"
+            />
           </li>
           <li class="cart-list-con2">
-            <img src="./images/goods1.png" />
+            <img :src="good.imgUrl" />
             <div class="item-msg">
-              米家（MIJIA） 小米小白智能摄像机增强版
-              1080p高清360度全景拍摄AI增强
+              {{ good.skuName }}
             </div>
           </li>
           <li class="cart-list-con3">
             <div class="item-txt">语音升级款</div>
           </li>
           <li class="cart-list-con4">
-            <span class="price">399.00</span>
+            <span class="price">{{ good.skuPrice }}</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
+            <a
+              href="javascript:void(0)"
+              class="mins"
+              @click="changeNum(good, -1)"
+              >-</a
+            >
             <input
               autocomplete="off"
               type="text"
-              value="1"
               minnum="1"
               class="itxt"
+              :value="good.skuNum"
+              @change="skuNumChange(good, $event)"
             />
-            <a href="javascript:void(0)" class="plus">+</a>
+            <a
+              href="javascript:void(0)"
+              class="plus"
+              @click="changeNum(good, 1)"
+              >+</a
+            >
           </li>
           <li class="cart-list-con6">
-            <span class="sum">399</span>
+            <span class="sum">{{ good.skuPrice * good.skuNum }}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
-            <br />
-            <a href="#none">移到收藏</a>
-          </li>
-        </ul>
-
-        <ul class="cart-list">
-          <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" id="" value="" />
-          </li>
-          <li class="cart-list-con2">
-            <img src="./images/goods2.png" />
-            <div class="item-msg">
-              华为（MIJIA） 华为metaPRO 30 浴霸4摄像 超清晰
-            </div>
-          </li>
-          <li class="cart-list-con3">
-            <div class="item-txt">黑色版本</div>
-          </li>
-          <li class="cart-list-con4">
-            <span class="price">5622.00</span>
-          </li>
-          <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
-            <input
-              autocomplete="off"
-              type="text"
-              value="1"
-              minnum="1"
-              class="itxt"
-            />
-            <a href="javascript:void(0)" class="plus">+</a>
-          </li>
-          <li class="cart-list-con6">
-            <span class="sum">5622</span>
-          </li>
-          <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
-            <br />
-            <a href="#none">移到收藏</a>
-          </li>
-        </ul>
-
-        <ul class="cart-list">
-          <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" id="" value="" />
-          </li>
-          <li class="cart-list-con2">
-            <img src="./images/goods3.png" />
-            <div class="item-msg">
-              iphone 11 max PRO 苹果四摄 超清晰 超费电 超及好用
-            </div>
-          </li>
-          <li class="cart-list-con3">
-            <div class="item-txt">墨绿色</div>
-          </li>
-          <li class="cart-list-con4">
-            <span class="price">11399.00</span>
-          </li>
-          <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
-            <input
-              autocomplete="off"
-              type="text"
-              value="1"
-              minnum="1"
-              class="itxt"
-            />
-            <a href="javascript:void(0)" class="plus">+</a>
-          </li>
-          <li class="cart-list-con6">
-            <span class="sum">11399</span>
-          </li>
-          <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a href="#none" class="sindelet" @click="deleteCart(good.skuId)"
+              >删除</a
+            >
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -126,42 +69,198 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" />
+        <input class="chooseAll" type="checkbox" v-model="bacthCheck" />
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a href="#none" @click="batchDelete">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
       <div class="money-box">
-        <div class="chosed">已选择 <span>0</span>件商品</div>
+        <div class="chosed">
+          已选择 <span>{{ goodsNum }}</span
+          >件商品
+        </div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
-          <i class="summoney">0</i>
+          <i class="summoney">{{ goodsPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <router-link class="sum-btn" to="/trade">结算</router-link>
         </div>
       </div>
     </div>
+    <div class="mask" ></div>
   </div>
 </template>
 
 <script>
-import { reqShopCartList } from "@/api/shopCart";
+import {
+  reqShopCartList,
+  reqCheckCart,
+  reqDeleteCart,
+  reqBatchCheckCart,
+  reqBatchDelete,
+} from "@/api/shopCart";
+
+import { reqAddCartOrChangeNum } from "@/api/detail";
 export default {
   name: "ShopCart",
   data() {
-    return {};
+    return { cartInfoList: [],};
   },
   mounted() {
     this.getShopCartList();
   },
   methods: {
+    //1.请求购物车列表
     async getShopCartList() {
+      
+
       const result = await reqShopCartList();
-      console.log(result);
+      // console.log(result, "result");
+      this.cartInfoList = result[0] ? result[0].cartInfoList : [];
+
+     
+
+      
+    },
+
+    //2. 切换商品选中状态
+    async checkCart(skuId, isChecked) {
+      try {
+       
+        await reqCheckCart(skuId, isChecked === 0 ? 1 : 0);
+        // alert("切换商品选中状态成功");`
+
+        //重新请求购物车数据
+        this.getShopCartList();
+      } catch (e) {
+        alert("切换商品选中状态失败");
+      }
+    },
+    //3. 删除购物车商品
+    async deleteCart(skuId) {
+      try {
+       
+        await reqDeleteCart(skuId);
+        // alert("删除购物车商品Okk");
+
+        //重新请求购物车数据
+        this.getShopCartList();
+      } catch (e) {
+        alert("删除购物车商品 no  Okk");
+      }
+    },
+
+    //4. 删除选中商品
+    async batchDelete() {
+      const skuIdList = this.cartInfoList.reduce((p, c) => {
+        /* if (c.isChecked === 1) {
+          return [...p, c.skuId];
+        } else {
+          return p;
+        } */
+
+        return c.isChecked === 1 ? [...p, c.skuId] : p;
+      }, []);
+
+      try {
+       
+        await reqBatchDelete(skuIdList);
+        // alert("删除成功");
+        //重新请求购物车数据
+        this.getShopCartList();
+      } catch (e) {
+        alert("删除失败");
+      }
+    },
+
+    //5. 数量改动
+    async changeNum(good, num) {
+      const { skuId, skuNum, isReq } = good;
+
+      //判断当前是否在请求中
+      if (isReq) return;
+
+      //判断临界值
+      if (skuNum <= 1 && num === -1) return;
+
+      //一旦放行说明当前没有请求,马上要开始请求了,所以要把开关打开
+      good.isReq = true;
+
+      try {
+      
+        await reqAddCartOrChangeNum(skuId, num);
+        //重新请求购物车数据
+        await this.getShopCartList();
+
+        good.isReq = false;
+      } catch (e) {
+        alert("失败");
+
+        good.isReq = false;
+      }
+    },
+
+    //6. 用户输入的改变
+    async skuNumChange(good, e) {
+      //判断用户输入的是否是非数字
+      if (isNaN(e.target.value)) {
+        return (e.target.value = good.skuNum);
+      }
+
+      //判断用户输入的内容是否小于0
+      if (+e.target.value <= 0) {
+        return (e.target.value = good.skuNum);
+      }
+
+      try {
+        
+        await reqAddCartOrChangeNum(good.skuId, e.target.value - good.skuNum);
+
+        //重新请求购物车数据
+        await this.getShopCartList();
+      } catch (e) {
+        alert("失败");
+      }
+    },
+  },
+  computed: {
+    bacthCheck: {
+      get() {
+        //判断购物车列表中的所有商品是否全选
+        return this.cartInfoList.every((item) => item.isChecked === 1);
+      },
+      async set(newVal) {
+        const skuIdList = this.cartInfoList.reduce(
+          (p, c) => [...p, c.skuId],
+          []
+        );
+        try {
+         
+          await reqBatchCheckCart(newVal ? 1 : 0, skuIdList);
+          // alert("全选设置成功");
+
+          //重新请求购物车数据
+          this.getShopCartList();
+        } catch (e) {
+          alert("全选设置失败");
+        }
+      },
+    },
+
+    goodsNum() {
+      return this.cartInfoList.reduce((p, c) => {
+        return c.isChecked === 1 ? p + c.skuNum : p;
+      }, 0);
+    },
+
+    goodsPrice() {
+      return this.cartInfoList.reduce((p, c) => {
+        return c.isChecked === 1 ? p + c.skuNum * c.skuPrice : p;
+      }, 0);
     },
   },
 };
