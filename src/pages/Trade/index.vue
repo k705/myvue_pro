@@ -3,30 +3,22 @@
     <h3 class="title">填写并核对订单信息</h3>
     <div class="content">
       <h5 class="receive">收件人信息</h5>
-      <div class="address clearFix">
-        <span class="username selected">张三</span>
+      <div
+        class="address clearFix"
+        v-for="(item, index) in addressList"
+        :key="item.id"
+        @click="changeAddress(index)"
+      >
+        <span class="username" :class="{ selected: item.isSelect === 1 }">{{
+          item.consignee
+        }}</span>
         <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">15010658793</span>
-          <span class="s3">默认地址</span>
+          <span class="s1">{{ item.deliveryAddress }}</span>
+          <span class="s2">{{ item.consigneeTel }}</span>
+          <span class="s3" v-if="item.isDefault === 1">默认地址</span>
         </p>
       </div>
-      <div class="address clearFix">
-        <span class="username selected">李四</span>
-        <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">13590909098</span>
-          <span class="s3">默认地址</span>
-        </p>
-      </div>
-      <div class="address clearFix">
-        <span class="username selected">王五</span>
-        <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">18012340987</span>
-          <span class="s3">默认地址</span>
-        </p>
-      </div>
+
       <div class="line"></div>
       <h5 class="pay">支付方式</h5>
       <div class="address clearFix">
@@ -39,43 +31,29 @@
         <h5>配送方式</h5>
         <div class="info clearFix">
           <span class="s1">天天快递</span>
-          <p>配送时间：预计8月10日（周三）09:00-15:00送达</p>
+          <p>配送时间:预计8月10日(周三)09:00-15:00送达</p>
         </div>
       </div>
       <div class="detail">
         <h5>商品清单</h5>
-        <ul class="list clearFix">
+        <ul
+          class="list clearFix"
+          v-for="item in detailArrayList"
+          :key="item.skuId"
+        >
           <li>
-            <img src="./images/goods.png" alt="" />
+            <img width="100" :src="item.imgUrl" alt="" />
           </li>
           <li>
             <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金色
-              移动联通电信4G手机硅胶透明防摔软壳 本色系列
+              {{ item.skuName }}
             </p>
             <h4>7天无理由退货</h4>
           </li>
           <li>
-            <h3>￥5399.00</h3>
+            <h3>￥{{ item.orderPrice }}</h3>
           </li>
-          <li>X1</li>
-          <li>有货</li>
-        </ul>
-        <ul class="list clearFix">
-          <li>
-            <img src="./images/goods.png" alt="" />
-          </li>
-          <li>
-            <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金色
-              移动联通电信4G手机硅胶透明防摔软壳 本色系列
-            </p>
-            <h4>7天无理由退货</h4>
-          </li>
-          <li>
-            <h3>￥5399.00</h3>
-          </li>
-          <li>X1</li>
+          <li>X{{ item.skuNum }}</li>
           <li>有货</li>
         </ul>
       </div>
@@ -84,6 +62,7 @@
         <textarea
           placeholder="建议留言前先与商家沟通确认"
           class="remarks-cont"
+          v-model="orderComment"
         ></textarea>
       </div>
       <div class="line"></div>
@@ -96,8 +75,11 @@
     <div class="money clearFix">
       <ul>
         <li>
-          <b><i>1</i>件商品，总商品金额</b>
-          <span>¥5399.00</span>
+          <b
+            ><i>{{ totalNum }}</i
+            >件商品，总商品金额</b
+          >
+          <span>¥{{ totalAmount }}</span>
         </li>
         <li>
           <b>返现：</b>
@@ -110,43 +92,90 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">应付金额:<span>¥5399.00</span></div>
+      <div class="price">
+        应付金额: <span>¥{{ totalAmount }}</span>
+      </div>
       <div class="receiveInfo">
         寄送至:
-        <span>北京市昌平区宏福科技园综合楼6层</span>
-        收货人：<span>张三</span>
-        <span>15010658793</span>
+        <span>{{ nowAddress?.deliveryAddress }}</span>
+        收货人：<span>{{ nowAddress?.consignee }}</span>
+        <span>{{ nowAddress?.consigneeTel }}</span>
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <a class="subBtn" @click="submitOrder">提交订单</a>
     </div>
   </div>
 </template>
 
 <script>
-import { reqTradeInfo } from "@/api/trade";
+import { reqTradeInfo, reqAddress, reqSubmitOrder } from "@/api/trade";
 
 export default {
   name: "Trade",
-  data() {
-    return {};
-  },
-  mounted() {
+ mounted() {
     this.getTradeInfo();
+    this.getAddress();
   },
-
+  data() {
+    return {
+      addressList: [],
+      detailArrayList: [],
+      totalAmount: 0,
+      totalNum: 0,
+      tradeNo: "",
+      orderComment: "",
+    };
+  },
   methods: {
     //1.请求交易信息
     async getTradeInfo() {
       const result = await reqTradeInfo();
       console.log(result);
-    
+      this.detailArrayList = result.detailArrayList;
+      this.totalAmount = result.totalAmount;
+      this.totalNum = result.totalNum;
+      this.tradeNo = result.tradeNo;
     },
-   
+    //2.请求地址信息
+    async getAddress() {
+      const result = await reqAddress();
+      this.addressList = result;
+    },
+    //3.修改地址的事件回调函数
+    async changeAddress(index) {
+      this.addressList.forEach((item) => {
+        item.isSelect = 0;
+      });
+      this.addressList[index].isSelect = 1;
+    },
+    //4. 提交订单
+    async submitOrder() {
+      const tradeInfo = {
+        ...this.nowAddress,
+        paymentWay: "ONLINE",
+        orderComment: this.orderComment,
+        orderDetailList: this.detailArrayList,
+      };
+
+      try {
+        const orderId = await reqSubmitOrder(this.tradeNo, tradeInfo);
+        this.$message.success("提交订单成功");
+        this.$router.push({
+          name: "Pay",
+          params: {
+            orderId,
+          },
+        });
+      } catch (e) {
+        this.$message.error("提交订单失败" + e.message);
+      }
+    },
   },
   computed: {
-    
+    nowAddress() {
+      return this.addressList.find((item) => item.isSelect === 1);
+    },
   },
 };
 </script>
