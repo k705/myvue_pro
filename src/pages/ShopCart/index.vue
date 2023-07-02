@@ -91,7 +91,7 @@
         </div>
       </div>
     </div>
-    <div class="mask" ></div>
+    <div class="mask"></div>
   </div>
 </template>
 
@@ -108,7 +108,7 @@ import { reqAddCartOrChangeNum } from "@/api/detail";
 export default {
   name: "ShopCart",
   data() {
-    return { cartInfoList: [],};
+    return { cartInfoList: [], maskIsShow: false };
   },
   mounted() {
     this.getShopCartList();
@@ -116,21 +116,20 @@ export default {
   methods: {
     //1.请求购物车列表
     async getShopCartList() {
-      
+      this.maskIsShow = true;
 
       const result = await reqShopCartList();
       // console.log(result, "result");
       this.cartInfoList = result[0] ? result[0].cartInfoList : [];
+      this.maskIsShow = false;
 
-     
-
-      
     },
 
     //2. 切换商品选中状态
     async checkCart(skuId, isChecked) {
       try {
-       
+        this.maskIsShow = true;
+
         await reqCheckCart(skuId, isChecked === 0 ? 1 : 0);
         // alert("切换商品选中状态成功");`
 
@@ -143,7 +142,8 @@ export default {
     //3. 删除购物车商品
     async deleteCart(skuId) {
       try {
-       
+        this.maskIsShow = true;
+
         await reqDeleteCart(skuId);
         // alert("删除购物车商品Okk");
 
@@ -167,7 +167,8 @@ export default {
       }, []);
 
       try {
-       
+        this.maskIsShow = true;
+
         await reqBatchDelete(skuIdList);
         // alert("删除成功");
         //重新请求购物车数据
@@ -191,7 +192,6 @@ export default {
       good.isReq = true;
 
       try {
-      
         await reqAddCartOrChangeNum(skuId, num);
         //重新请求购物车数据
         await this.getShopCartList();
@@ -217,7 +217,8 @@ export default {
       }
 
       try {
-        
+        this.maskIsShow = true;
+
         await reqAddCartOrChangeNum(good.skuId, e.target.value - good.skuNum);
 
         //重新请求购物车数据
@@ -239,7 +240,8 @@ export default {
           []
         );
         try {
-         
+        this.maskIsShow = true;
+
           await reqBatchCheckCart(newVal ? 1 : 0, skuIdList);
           // alert("全选设置成功");
 
@@ -270,6 +272,18 @@ export default {
 .cart {
   width: 1200px;
   margin: 0 auto;
+  position: relative;
+  .mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://img.zcool.cn/community/0177aa60ac8ffe11013f47208b2584.gif")
+      0 0 no-repeat;
+    background-size: 100% 100%;
+    opacity: 0.5;
+  }
 
   h4 {
     margin: 9px 0;
