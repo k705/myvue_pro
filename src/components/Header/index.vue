@@ -1,5 +1,5 @@
 <template>
-    <!-- 头部 -->
+  <!-- 头部 -->
   <header class="header">
     <!-- 头部的第一行 -->
     <div class="top">
@@ -14,7 +14,9 @@
         </div>
         <div class="typeList">
           <a href="###">我的订单</a>
-          <a href="###">我的购物车</a>
+
+          <router-link to="/shopCart">我的购物车</router-link>
+
           <a href="###">我的尚品汇</a>
           <a href="###">尚品汇会员</a>
           <a href="###">企业采购</a>
@@ -43,7 +45,6 @@
             class="sui-btn btn-xlarge btn-danger"
             type="button"
             @click="toSearch"
-            
           >
             搜索
           </button>
@@ -55,30 +56,30 @@
 
 <script>
 export default {
-name:"Header",
-data(){
-  return{
-    keyword:""
-  }
-},
-mounted(){
-  this.$bus.$on("clearKeyword",()=>{
-    this.keyword=''
-  })
-},
-methods:{
-  toSearch(){
-    const query = this.$route.query;
-    this.$router.push({
-      name:"Search",
-      params:{
-        keyword:this.keyword || null
-      },
-      query
-    })
-  }
-}
-}
+  name: "Header",
+  data() {
+    return {
+      keyword: "",
+    };
+  },
+  mounted() {
+    this.$bus.$on("clearKeyword", () => {
+      this.keyword = "";
+    });
+  },
+  methods: {
+    toSearch() {
+      const query = this.$route.query;
+      this.$router.push({
+        name: "Search",
+        params: {
+          keyword: this.keyword || null,
+        },
+        query,
+      });
+    },
+  },
+};
 </script>
 <style scoped lang="less">
 .header {

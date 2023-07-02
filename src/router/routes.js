@@ -4,6 +4,7 @@ const Register = ()=>import("@/pages/Register")
 const Search = ()=>import("@/pages/Search")
 const NotFound = () => import("@/pages/404")
 const Detail = ()=>import("@/pages/Detail")
+const ShopCart = ()=>import("@/pages/ShopCart")
 
 const AddCartSuccess = ()=>import("@/pages/AddCartSuccess")
 
@@ -47,6 +48,11 @@ export default [
       component:AddCartSuccess
      
   },{
+    path: "/shopCart",
+    name: "ShopCart",
+    component:ShopCart
+   
+},{
         path: "/*",
         name: "NotFound",
         component:NotFound
