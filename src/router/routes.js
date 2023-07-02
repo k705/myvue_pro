@@ -5,6 +5,7 @@ const Search = () => import("@/pages/Search")
 const Detail = ()=>import("@/pages/Detail")
 const AddCartSuccess = ()=>import("@/pages/AddCartSuccess")
 const ShopCart = ()=>import("@/pages/ShopCart")
+const Trade = ()=>import("@/pages/Trade")
 
 const NotFound = () => import("@/pages/404")
 
@@ -50,6 +51,10 @@ export default [
     path: "/shopCart",
     name: "ShopCart",
     component:ShopCart
+},{
+    path: "/trade",
+    name: "Trade",
+    component:Trade
 },{
         path: "/*",
         name: "NotFound",
