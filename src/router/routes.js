@@ -5,8 +5,12 @@ const Search = ()=>import("@/pages/Search")
 const NotFound = () => import("@/pages/404")
 const Detail = ()=>import("@/pages/Detail")
 const ShopCart = ()=>import("@/pages/ShopCart")
-const Trade = ()=>import("@/pages/Trade")
-const Pay = ()=>import("@/pages/Pay")
+const Trade = () => import("@/pages/Trade");
+const Pay = () => import("@/pages/Pay");
+const PaySuccess = () => import("@/pages/PaySuccess");
+const Center = () => import("@/pages/Center");
+const MyOrder = () => import("@/pages/Center/components/MyOrder");
+const TeamOrder = () => import("@/pages/Center/components/TeamOrder");
 
 const AddCartSuccess = ()=>import("@/pages/AddCartSuccess")
 
@@ -64,7 +68,63 @@ export default [
     name: "Pay",
     component:Pay
    
-},{
+}, {
+    path: "/center",
+    component: Center,
+    name: "Center",
+    meta: {
+      isAuth: true,
+    },
+    redirect: "/center/myOrder",
+    children: [
+      {
+        path: "myOrder",
+        name: "MyOrder",
+        component: MyOrder,
+        meta: {
+          isAuth: true,
+        },
+      },
+      {
+        path: "teamOrder",
+        name: "TeamOrder",
+        component: TeamOrder,
+        meta: {
+          isAuth: true,
+        },
+      },
+    ],
+  },
+  {
+    path: "/pay/:orderId",
+    component: Pay,
+    name: "Pay",
+    meta: {
+      isAuth: true,
+    },
+    beforeEnter: (to, from, next) => {
+      if (from.name === "Trade") {
+        next();
+      } else {
+        next("/shopCart");
+      }
+    },
+  },
+  {
+    path: "/paySuccess",
+    component: PaySuccess,
+    name: "PaySuccess",
+    meta: {
+      isAuth: true,
+    },
+    beforeEnter: (to, from, next) => {
+      if (from.name === "Pay") {
+        next();
+      } else {
+        next("/shopCart");
+      }
+    },
+  },{
         path: "/*",
         name: "NotFound",
         component:NotFound
