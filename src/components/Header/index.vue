@@ -59,7 +59,9 @@
 </template>
 
 <script>
-import {mapState} from "vuex"
+import {mapState,mapMutations} from "vuex"
+import { reqLogout } from "@/api/user";
+
 export default {
   name: "Header",
   data() {
@@ -74,6 +76,7 @@ this.$bus.$on("clearKeyword",()=>{
   }
   ,
   methods: {
+     ...mapMutations("user", ["clear_Token"]),
     toSearch() {
       const query = this.$route.query;
       this.$router.push({
@@ -83,6 +86,17 @@ this.$bus.$on("clearKeyword",()=>{
         },
         query,
       });
+    },
+     async logout() {
+      try {
+        await reqLogout();
+
+        this.clear_Token();
+
+        this.$router.push("/login");
+      } catch (e) {
+        alert("推出登录失败");
+      }
     },
   },
   computed:{

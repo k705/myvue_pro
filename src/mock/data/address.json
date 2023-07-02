@@ -1,0 +1,26 @@
+[
+  {
+    "id": "001",
+    "consignee": "老李",
+    "consigneeTel": "15701665566",
+    "deliveryAddress": "东湖网谷6号楼4楼",
+    "isDefault": 1,
+    "isSelect": 1
+  }, 
+  {
+    "id": "002",
+    "consignee": "坤坤",
+    "consigneeTel": "13700008888",
+    "deliveryAddress": "湖北省武汉尚硅谷406",
+    "isDefault": 0,
+    "isSelect": 0
+  },
+  {
+    "id": "003",
+    "consignee": "志辉",
+    "consigneeTel": "13888888888",
+    "deliveryAddress": "至尊spa c52房间",
+    "isDefault": 0,
+    "isSelect": 0
+  }
+]

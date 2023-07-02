@@ -20,4 +20,7 @@ export const reqUserInfo = () => {
   return request.get(`/api/user/passport/auth/getUserInfo`);
 };
 
-
+//5. 退出登录
+export const reqLogout = () => {
+  return request.get(`/api/user/passport/logout`);
+};
