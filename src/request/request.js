@@ -4,13 +4,14 @@ import store from "@/store"
 const request = axios.create({
     baseURL: process.env.VUE_APP_API1,
     timeout: 10000,
-    headers:{}
+    headers: {}
 })
 
 // 请求拦截器
 request.interceptors.request.use((config) => {
     config.headers.userTempId = store.state.user.userTempId;
-        return config 
+    config.headers.token = store.state.user.token;
+    return config
 })
 
 // 响应拦截器
