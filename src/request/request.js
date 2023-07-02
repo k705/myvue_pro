@@ -1,4 +1,5 @@
 import axios from "axios"
+import store from "@/store"
 const request = axios.create({
     baseURL: process.env.VUE_APP_API1,
     timeout: 10000,
@@ -8,6 +9,7 @@ const request = axios.create({
 // 配置请求拦截器
 request.interceptors.request.use(
     (config) => {
+        config.headers.userTempID = store.state.user.userTempID
     return config;
 })
    

@@ -5,8 +5,10 @@ import Swiper from "@/components/Swiper";
 import Pagination from "@/components/Pagination";
 import "swiper/css/swiper.min.css";
 
-import TypeNav from './components/TypeNav'
+import TypeNav from '@/components/TypeNav'
 import "@/mock";
+
+import store from '@/store'
 
 Vue.config.productionTip = false
 
@@ -18,5 +20,6 @@ new Vue({
   beforeCreate(){
     Vue.prototype.$bus=this
   },
-  router
+  router,
+  store
 }).$mount('#app')
