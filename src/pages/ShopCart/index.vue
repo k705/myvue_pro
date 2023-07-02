@@ -86,12 +86,13 @@
           <em>总价（不含运费） ：</em>
           <i class="summoney">{{ goodsPrice }}</i>
         </div>
-        <div class="sumbtn">
+       <div class="sumbtn">
           <router-link class="sum-btn" to="/trade">结算</router-link>
         </div>
       </div>
     </div>
-    <div class="mask"></div>
+      <div class="mask" v-show="maskIsShow"></div>
+
   </div>
 </template>
 
@@ -273,7 +274,7 @@ export default {
   width: 1200px;
   margin: 0 auto;
   position: relative;
-  .mask {
+ .mask {
     position: absolute;
     left: 0;
     top: 0;
@@ -284,6 +285,7 @@ export default {
     background-size: 100% 100%;
     opacity: 0.5;
   }
+
 
   h4 {
     margin: 9px 0;
