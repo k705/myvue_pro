@@ -307,3 +307,12 @@ router.afterEach((to, from, next) => { NProgress.done() })
     - 在本地存储中拿到商品数据，在div中遍历数据渲染
     `goodData = JSON.parse(sessionStorage.getItem("goodData"));`
     
+
+    bug:userTempId写成了userTempID
+    ```js
+    // 配置请求拦截器
+        request.interceptors.request.use((config) => {
+        config.headers.userTempId = store.state.user.userTempId;
+        return config;
+    })
+    ```

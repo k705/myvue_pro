@@ -7,13 +7,14 @@ const request = axios.create({
 })
 
 // 配置请求拦截器
-request.interceptors.request.use(
-    (config) => {
-        config.headers.userTempID = store.state.user.userTempID
-    return config;
-})
-   
-    // 配置响应拦截器
+request.interceptors.request.use((config) => {
+        config.headers.userTempId = store.state.user.userTempId;
+        return config;
+    })
+
+
+
+// 配置响应拦截器
 request.interceptors.response.use(
     (response) => {
         if (response.data.code === 200) {
