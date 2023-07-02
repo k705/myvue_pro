@@ -110,7 +110,7 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">应付金额:　<span>¥5399.00</span></div>
+      <div class="price">应付金额:<span>¥5399.00</span></div>
       <div class="receiveInfo">
         寄送至:
         <span>北京市昌平区宏福科技园综合楼6层</span>
