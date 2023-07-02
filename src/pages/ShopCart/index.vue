@@ -31,7 +31,7 @@
             <span class="price">{{ good.skuPrice }}</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins" @click="changeNum(good.skuId,-1,good.skuNum)">-</a>
+            <a href="javascript:void(0)" class="mins" @click="changeNum(good,-1)">-</a>
             <input
               autocomplete="off"
               type="text"
@@ -39,7 +39,7 @@
               minnum="1"
               class="itxt"
             />
-            <a href="javascript:void(0)" class="plus" @click="changeNum(good.skuId,1,good.skuNum)">+</a>
+            <a href="javascript:void(0)" class="plus" @click="changeNum(good,1)">+</a>
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{ good.skuPrice * good.skuNum }}</span>
@@ -103,6 +103,10 @@ export default {
       const result = await reqShopCartList();
       console.log(result);
       this.cartInfoList = result[0] ? result[0].cartInfoList : [];
+       this.cartInfoList.forEach((item) => {
+        this.$set(item, "isReq", false);
+      });
+
     },
     // 2.切换商品选择转状态
     async checkCart(skuId, isChecked) {
@@ -138,15 +142,19 @@ export default {
       }
     },
     // 5.改变数量
-    async changeNum(skuId,num,skuNum) {
-     if(skuNum <=1 && num === -1)return
+    async changeNum(good, num) {
+      const { skuId, skuNum, isReq } = good;
+       if (isReq) return;
+     if(skuNum <=1 && num === -1)return;
+     good.isReq = true;
       try {
         await reqAddCartOrChangeNum(skuId,num,skuNum);
      
-        this.getShopCartList();
-        
+        await this.getShopCartList();
+          good.isReq = false;
       } catch (e) {
         alert("改变数量失败");
+          good.isReq = false;
       }
     },
     
