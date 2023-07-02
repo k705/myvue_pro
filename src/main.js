@@ -4,19 +4,21 @@ import router from "@/router"
 import TypeNav from "@/components/TypeNav"
 import Swiper from "@/components/Swiper"
 import Pagination from "@/components/Pagination"
+import store from "@/store"
 
 import "@/mock"
 import "swiper/css/swiper.min.css";
 
-Vue.component("TypeNav",TypeNav)
-Vue.component("Pagination",Pagination)
-Vue.component("Swiper",Swiper)
+Vue.component("TypeNav", TypeNav)
+Vue.component("Pagination", Pagination)
+Vue.component("Swiper", Swiper)
 Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-  beforeCreate(){
+  beforeCreate() {
     Vue.prototype.$bus = this
   },
-  router
+  router,
+  store
 }).$mount('#app')
