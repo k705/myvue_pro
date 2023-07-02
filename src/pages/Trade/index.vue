@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import { reqTradeInfo } from "@/api/trade";
+import { reqTradeInfo, reqAddress, reqSubmitOrder } from "@/api/trade";
 export default {
   name: "Trade",
   data() {
@@ -170,9 +170,7 @@ export default {
     },
   
   },
-  computed: {
-    
-  },
+
 };
 </script>
 

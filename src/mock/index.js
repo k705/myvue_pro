@@ -17,3 +17,9 @@ Mock.mock("/floor/list", "get", {
   message: "成功",
   ok: true,
 });
+Mock.mock("/address/list", "get", {
+  code: 200,
+  data: address,
+  message: "成功",
+  ok: true,
+});
