@@ -6,7 +6,12 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="userInfo.nickName">
+            <span>欢迎您</span>
+            <span>{{ userInfo.nickName }}</span>
+            <a @click="logout">退出登录</a>
+          </p>
+          <p v-else>
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
@@ -55,6 +60,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Header",
   data() {
@@ -78,6 +85,9 @@ export default {
         query,
       });
     },
+  },
+  computed: {
+    ...mapState("user", ["userInfo"]),
   },
 };
 </script>
