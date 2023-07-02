@@ -112,14 +112,19 @@
 import { reqTradeInfo, reqAddress, reqSubmitOrder } from "@/api/trade";
 export default {
   name: "Trade",
+   mounted() {
+    this.getTradeInfo();
+    this.getAddress();
+  },
   data() {
     return {
-   
+      addressList: [],
+      detailArrayList: [],
+      totalAmount: 0,
+      totalNum: 0,
+      tradeNo: "",
+      orderComment: "",
     };
-  },
-  mounted() {
-    this.getTradeInfo();
-
   },
 
   methods: {
