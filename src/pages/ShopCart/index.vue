@@ -31,7 +31,12 @@
             <span class="price">{{ good.skuPrice }}</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins" @click="changeNum(good,-1)">-</a>
+            <a
+              href="javascript:void(0)"
+              class="mins"
+              @click="changeNum(good, -1)"
+              >-</a
+            >
             <input
               autocomplete="off"
               type="text"
@@ -39,7 +44,12 @@
               minnum="1"
               class="itxt"
             />
-            <a href="javascript:void(0)" class="plus" @click="changeNum(good,1)">+</a>
+            <a
+              href="javascript:void(0)"
+              class="plus"
+              @click="changeNum(good, 1)"
+              >+</a
+            >
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{ good.skuPrice * good.skuNum }}</span>
@@ -65,7 +75,10 @@
         <a href="#none">清除下柜商品</a>
       </div>
       <div class="money-box">
-        <div class="chosed">已选择 <span>{{goodsNum}}</span>件商品</div>
+        <div class="chosed">
+          已选择 <span>{{ goodsNum }}</span
+          >件商品
+        </div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
           <i class="summoney">{{ goodsPrice }}</i>
@@ -75,6 +88,7 @@
         </div>
       </div>
     </div>
+    <div class="mask" v-show="maskIsShow"></div>
   </div>
 </template>
 
@@ -84,14 +98,15 @@ import {
   reqCheckCart,
   reqDeleteCart,
   reqBatchCheckCart,
-  reqBatchDelete
+  reqBatchDelete,
 } from "@/api/shopCart";
-import {reqAddCartOrChangeNum} from "@/api/detail";
+import { reqAddCartOrChangeNum } from "@/api/detail";
 export default {
   name: "ShopCart",
   data() {
     return {
       cartInfoList: [],
+      maskIsShow: false,
     };
   },
   mounted() {
@@ -99,18 +114,22 @@ export default {
   },
   methods: {
     // 1.请求购物车列表
+
     async getShopCartList() {
+      this.maskIsShow = true;
       const result = await reqShopCartList();
       console.log(result);
       this.cartInfoList = result[0] ? result[0].cartInfoList : [];
-       this.cartInfoList.forEach((item) => {
+      this.cartInfoList.forEach((item) => {
         this.$set(item, "isReq", false);
       });
-
+      this.maskIsShow = false;
     },
     // 2.切换商品选择转状态
     async checkCart(skuId, isChecked) {
       try {
+        this.maskIsShow = true;
+
         await reqCheckCart(skuId, isChecked === 0 ? 1 : 0);
         //  alert("切换商品选中状态成功")
         this.getShopCartList();
@@ -121,6 +140,8 @@ export default {
     // 3.删除购物车商品
     async deleteCart(skuId) {
       try {
+        this.maskIsShow = true;
+
         await reqDeleteCart(skuId);
         alert("删除购物车商品成功");
         this.getShopCartList();
@@ -129,14 +150,17 @@ export default {
         alert("删除购物车商品失败");
       }
     },
-     // 4.删除选中商品
+    // 4.删除选中商品
     async batchDelete() {
-      const skuIdList = this.cartInfoList.reduce( (p, c) => {return c.isChecked === 1?[...p,c.skuId]:p},[])
+      const skuIdList = this.cartInfoList.reduce((p, c) => {
+        return c.isChecked === 1 ? [...p, c.skuId] : p;
+      }, []);
       try {
+        this.maskIsShow = true;
+
         await reqBatchDelete(skuIdList);
         alert("删除选中商品成功");
         this.getShopCartList();
-        
       } catch (e) {
         alert("删除选中商品失败");
       }
@@ -144,20 +168,43 @@ export default {
     // 5.改变数量
     async changeNum(good, num) {
       const { skuId, skuNum, isReq } = good;
-       if (isReq) return;
-     if(skuNum <=1 && num === -1)return;
-     good.isReq = true;
+      if (isReq) return;
+      if (skuNum <= 1 && num === -1) return;
+      good.isReq = true;
       try {
-        await reqAddCartOrChangeNum(skuId,num,skuNum);
-     
+        this.maskIsShow = true;
+
+        await reqAddCartOrChangeNum(skuId, num, skuNum);
+
         await this.getShopCartList();
-          good.isReq = false;
+        good.isReq = false;
       } catch (e) {
         alert("改变数量失败");
-          good.isReq = false;
+        good.isReq = false;
       }
     },
-    
+    //6. 用户输入的改变
+    async skuNumChange(good, e) {
+      //判断用户输入的是否是非数字
+      if (isNaN(e.target.value)) {
+        return (e.target.value = good.skuNum);
+      }
+
+      //判断用户输入的内容是否小于0
+      if (+e.target.value <= 0) {
+        return (e.target.value = good.skuNum);
+      }
+
+      try {
+        this.maskIsShow = true;
+        await reqAddCartOrChangeNum(good.skuId, e.target.value - good.skuNum);
+
+        //重新请求购物车数据
+        await this.getShopCartList();
+      } catch (e) {
+        alert("失败");
+      }
+    },
   },
   computed: {
     bacthCheck: {
@@ -167,27 +214,33 @@ export default {
         });
       },
       async set(newValue) {
-        const skuIdList = this.cartInfoList.reduce( (p, c) => [...p, c.skuId],
-          []);
+        const skuIdList = this.cartInfoList.reduce(
+          (p, c) => [...p, c.skuId],
+          []
+        );
         try {
+          this.maskIsShow = true;
+
           await reqBatchCheckCart(newValue ? 1 : 0, skuIdList);
-        this.getShopCartList();
+          this.getShopCartList();
 
           // alert("成功")
-        } catch (e) {alert("失败")}
+        } catch (e) {
+          alert("失败");
+        }
       },
     },
 
-    goodsNum(){
-      return this.cartInfoList.reduce((p,c)=>{
-        return c.isChecked === 1? p+c.skuNum:p
-      },0)
+    goodsNum() {
+      return this.cartInfoList.reduce((p, c) => {
+        return c.isChecked === 1 ? p + c.skuNum : p;
+      }, 0);
     },
-     goodsPrice(){
-      return this.cartInfoList.reduce((p,c)=>{
-        return c.isChecked === 1? p+c.skuNum*c.skuPrice:p
-      },0)
-    }
+    goodsPrice() {
+      return this.cartInfoList.reduce((p, c) => {
+        return c.isChecked === 1 ? p + c.skuNum * c.skuPrice : p;
+      }, 0);
+    },
   },
 };
 </script>
@@ -196,7 +249,18 @@ export default {
 .cart {
   width: 1200px;
   margin: 0 auto;
-
+  position: relative;
+  .mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://img.zcool.cn/community/0177aa60ac8ffe11013f47208b2584.gif")
+      0 0 no-repeat;
+    background-size: 100% 100%;
+    opacity: 0.5;
+  }
   h4 {
     margin: 9px 0;
     font-size: 14px;
